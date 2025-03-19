@@ -1,7 +1,13 @@
+InstructorEmbedding==1.0.1
+sentence-transformers==2.2.2
+transformers==4.35.2
+huggingface_hub==0.16.4
+torch==2.2.0
+tensorflow==2.15.0
+scikit-learn==1.4.1
+numpy==1.26.4
+pandas==2.2.0
 chromadb
 pydantic
 PyMuPDF
-numpy
-pandas
 redis
-sentence-transformers
