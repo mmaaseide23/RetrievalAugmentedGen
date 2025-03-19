@@ -3,7 +3,19 @@ import numpy as np
 import fitz
 import os
 import redis
+import chromadb
+from chromadb.utils import embedding_functions
 
+
+client = chromadb.Client()
+
+# If you supply an embedding function, you must supply it every time you get the collection. 
+# Otherwise, it will use the default embedding function which is sentence transformer L6 v2
+# I'm curious how we are going to go about that but I think we just need to pass it in as a string parameter
+#client = chromadb.PersistentClient(path="/path/to/save/to") client to utilize when saving the function
+
+collection = client.create_collection(name="awesome_collection", )# if different embedding function is used must tell chroma
+default_ef = embedding_functions.DefaultEmbeddingFunction()
 # Initialize Redis connection
 redis_client = redis.Redis(host="localhost", port=6380, db=0)
 
@@ -34,17 +46,28 @@ def split_text_into_chunks(text, chunk_size=300, overlap=50):
     return chunks
 
 
-
+# 
 # will need to have different iterations of this for testing - this goes for the storing as well
-def get_embedding(text):
+def get_embedding_chroma(text):
     """Get the embedding of a text."""
-    # Placeholder for actual embedding calculation
-    return np.random.rand(VECTOR_DIM)
+    embedding = default_ef(text)
+    return collection.query(query_embeddings=[embedding],n_results=10)
+    #where={"metadata_field": "is_equal_to_this"},
+    #where_document={"$contains":"search_string"}
 
 
-def store_embedding(file, page, chunk, embedding):
+
+
+def store_embedding_chroma(file, page, chunk, embedding):
     """Store the embedding of a chunk."""
-    pass
+    collection.add(
+    docs=[file],
+    embeddings=[[embedding]],
+    metadatas=[{"page": page, "chunk": chunk}],
+    ids=[f"{file}:{page}:{chunk}"])
+
+
+
 
 
 

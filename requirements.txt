@@ -1,0 +1,7 @@
+chromadb
+pydantic
+PyMuPDF
+numpy
+pandas
+redis
+sentence-transformers
