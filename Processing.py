@@ -45,6 +45,34 @@ def split_text_into_chunks(text, chunk_size=300, overlap=50):
         chunks.append(chunk)
     return chunks
 
+
+# 
+# will need to have different iterations of this for testing - this goes for the storing as well
+def get_embedding_chroma(text):
+    """Get the embedding of a text."""
+    embedding = default_ef(text)
+    return collection.query(query_embeddings=[embedding],n_results=10)
+    #where={"metadata_field": "is_equal_to_this"},
+    #where_document={"$contains":"search_string"}
+
+
+
+
+def store_embedding_chroma(file, page, chunk, embedding):
+    """Store the embedding of a chunk."""
+    collection.add(
+    docs=[file],
+    embeddings=[[embedding]],
+    metadatas=[{"page": page, "chunk": chunk}],
+    ids=[f"{file}:{page}:{chunk}"])
+
+
+
+
+
+
+
+
 def process_pdfs(data_dir):
     for file_name in os.listdir(data_dir):
         if file_name.endswith(".pdf"):
