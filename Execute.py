@@ -1,80 +1,125 @@
-from Embedding import InstructorEmbedder, MiniLMEmbedder
-from Processing import extract_text_from_pdf, split_text_into_chunks
+import redis
+import json
+import numpy as np
+from Embedding import MiniLMEmbedder  # Import MiniLM embedding model
+from redis.commands.search.query import Query
+import ollama
 
 
-import requests
+# Initialize Redis client
+redis_client = redis.StrictRedis(host="localhost", port=6380, decode_responses=True)
 
-class LLMHandler:
-    def __init__(self, model_name="llama2"):
-        """Initialize the LLM handler with specified model
-        
-        Args:
-            model_name (str): Name of the model to use ('llama2' or 'mistral')
-        """
-        self.model_name = model_name
-        self.api_base = "http://localhost:11434/api"
-        
-    def set_model(self, model_name):
-        """Change the model being used
-        
-        Args:
-            model_name (str): Name of the model to use ('llama2' or 'mistral')
-        """
-        self.model_name = model_name
-        
-    def generate_response(self, prompt, context=None, system_prompt=None):
-        """Generate a response from the LLM
-        
-        Args:
-            prompt (str): The user's question
-            context (str): Retrieved context from vector search
-            system_prompt (str): Optional system prompt to guide the model
-        """
-        # Construct the full prompt
-        full_prompt = ""
-        if system_prompt:
-            full_prompt += f"{system_prompt}\n\n"
-        if context:
-            full_prompt += f"Context:\n{context}\n\n"
-        full_prompt += f"Question: {prompt}\n\nAnswer:"
-        
-        # Make request to Ollama API
-        response = requests.post(
-            f"{self.api_base}/generate",
-            json={
-                "model": self.model_name,
-                "prompt": full_prompt,
-                "stream": False
-            }
+VECTOR_DIM = 384
+INDEX_NAME = "embedding_index"
+DOC_PREFIX = "doc:"
+DISTANCE_METRIC = "COSINE"
+
+# Initialize MiniLM Embedder
+embedder = MiniLMEmbedder()
+
+def get_embedding(text):
+    """Generate embedding"""
+    return embedder.embed_chunks([text])[0]  
+
+def search_embeddings(query, top_k=3):
+    """Search the Redis database for similar embeddings."""
+    query_embedding = get_embedding(query)
+    
+    # Convert embedding to bytes for Redis search
+    query_vector = np.array(query_embedding, dtype=np.float32).tobytes()
+
+    try:
+        q = (
+            Query("*=>[KNN 5 @embedding $vec AS vector_distance]")
+            .sort_by("vector_distance")
+            .return_fields("file", "page", "text", "vector_distance")
+            .dialect(2)
         )
-        
-        if response.status_code == 200:
-            return response.json()['response']
-        else:
-            return f"Error: {response.status_code} - {response.text}"
 
-# Example usage
-if __name__ == "__main__":
-    # # Initialize with Llama 2
-    llm = LLMHandler(model_name="llama2")
-    
-    # # Test with Llama 2
-    # response = llm.generate_response(
-    #     prompt="What is machine learning?",
-    #     context="Machine learning is a subset of artificial intelligence that focuses on creating systems that can learn from data.",
-    #     system_prompt="You are a helpful AI assistant that provides clear and concise answers."
-    # )
-    # print("\nLlama 2 Response:")
-    # print(response)
-    
-    # Switch to Mistral
-    llm.set_model("mistral")
-    
-    # Test with Mistral
-    response = llm.generate_response(
-        prompt="What is machine learning?",
-        context="Machine learning is a subset of artificial intelligence that focuses on creating systems that can learn from data.",
-        system_prompt="You are a helpful AI assistant that provides clear and concise answers."
+        # Perform the search
+        results = redis_client.ft(INDEX_NAME).search(
+            q, query_params={"vec": query_vector}
+        )
+
+        # Transform results into a structured format
+        top_results = [
+            {
+                "file": result.file,
+                "page": result.page,
+                "chunk": result.text,
+                "similarity": result.vector_distance,
+            }
+            for result in results.docs
+        ][:top_k]
+
+        # Debugging output
+        for result in top_results:
+            print(f"---> File: {result['file']}, Page: {result['page']}, Chunk: {result['chunk']}")
+
+        return top_results
+
+    except Exception as e:
+        print(f"Search error: {e}")
+        return []
+
+
+def generate_rag_response(query, context_results):
+    """Generate a response using the retrieved context and the Ollama Mistral model."""
+
+    context_str = "\n".join(
+        [
+            f"From {result.get('file', 'Unknown file')} (page {result.get('page', 'Unknown page')}, chunk {result.get('chunk', 'Unknown chunk')}) "
+            f"with similarity {float(result.get('similarity', 0)):.2f}"
+            for result in context_results
+        ]
     )
-    print("\nMistral Response:")
-    print(response) 
+
+
+    prompt = f"""You are a helpful AI assistant. 
+    Use the following context to answer the query as accurately as possible. If the context is 
+    not relevant to the query, say 'I don't know'.
+
+Context:
+{context_str}
+
+Query: {query}
+
+Answer:"""
+
+    # Generate response using Ollama
+    response = ollama.chat(
+        model="mistral:latest", messages=[{"role": "user", "content": prompt}]
+    )
+
+    return response["message"]["content"]
+
+def interactive_search():
+    """Interactive search interface."""
+    print("🔍 RAG Search Interface")
+    print("Type 'exit' to quit")
+
+    while True:
+        query = input("\nEnter your search query: ")
+
+        if query.lower() == "exit":
+            break
+
+        # Search for relevant embeddings
+        context_results = search_embeddings(query)
+
+        # Print retrieved context
+        print("\n--- Retrieved Context ---")
+        for result in context_results:
+            print(f"File: {result['file']}, Page: {result['page']}, Chunk: {result['chunk']}")
+
+        # Generate RAG response using the retrieved context
+        response = generate_rag_response(query, context_results)
+
+        # Print the generated response
+        print("\n--- Response ---")
+        print(response)
+
+
+
+if __name__ == "__main__":
+    interactive_search()

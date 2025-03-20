@@ -3,26 +3,91 @@ import numpy as np
 import fitz
 import os
 import redis
-
+from Embedding import MiniLMEmbedder  # Using MiniLM as it's lighter and doesn't need instructions
 
 # Redis client
 redis_client = redis.Redis(host="localhost", port=6380, db=0)
 
-VECTOR_DIM = 768
+VECTOR_DIM = 384  
 INDEX_NAME = "embedding_index"
 DOC_PREFIX = "doc:"
 DISTANCE_METRIC = "COSINE"
 
+class DocumentProcessor:
+    def __init__(self):
+        """Initialize the document processor with the embedding model"""
+        self.embedder = MiniLMEmbedder()
+        
+    def get_embedding(self, text: str) -> np.ndarray:
+        """Get embedding for a single text chunk"""
+        return self.embedder.embed_chunks([text])[0]
 
-# used to clear the redis vector store
+    def store_embedding(self, file: str, page: str, chunk: str, embedding: np.ndarray):
+        """Store document chunk and its embedding in Redis"""
+        key = f"{DOC_PREFIX}{file}:{page}:{hash(chunk)}"
+        
+        # Convert embedding to bytes for Redis storage
+        embedding_bytes = embedding.astype(np.float32).tobytes()
+        
+        # Store the document chunk and its embedding
+        redis_client.hset(
+            key,
+            mapping={
+                "text": chunk,
+                "file": file,
+                "page": page,
+                "embedding": embedding_bytes
+            }
+        )
+
+    def process_pdfs(self, data_dir: str):
+        """Process all PDFs in the given directory"""
+        for file_name in os.listdir(data_dir):
+            if file_name.endswith(".pdf"):
+                pdf_path = os.path.join(data_dir, file_name)
+                text_by_page = self.extract_text_from_pdf(pdf_path)
+                
+                for page_num, text in text_by_page:
+                    chunks = self.split_text_into_chunks(text)
+                    for chunk in chunks:
+                        # Get embedding for chunk
+                        embedding = self.get_embedding(chunk)
+                        # Store in Redis
+                        self.store_embedding(
+                            file=file_name,
+                            page=str(page_num),
+                            chunk=chunk,
+                            embedding=embedding
+                        )
+                print(f" -----> Processed {file_name}")
+
+    @staticmethod
+    def extract_text_from_pdf(pdf_path: str):
+        """Extract text from a PDF file."""
+        doc = fitz.open(pdf_path)
+        text_by_page = []
+        for page_num, page in enumerate(doc):
+            text_by_page.append((page_num, page.get_text()))
+        return text_by_page
+
+    @staticmethod
+    def split_text_into_chunks(text: str, chunk_size: int = 300, overlap: int = 50):
+        """Split text into chunks of approximately chunk_size words with overlap."""
+        words = text.split()
+        chunks = []
+        for i in range(0, len(words), chunk_size - overlap):
+            chunk = " ".join(words[i : i + chunk_size])
+            chunks.append(chunk)
+        return chunks
+
 def clear_redis_store():
+    """Clear the Redis database"""
     print("Clearing existing Redis store...")
     redis_client.flushdb()
     print("Redis store cleared.")
 
-
-# Create an HNSW index in Redis
 def create_hnsw_index():
+    """Create the Redis vector similarity index"""
     try:
         redis_client.execute_command(f"FT.DROPINDEX {INDEX_NAME} DD")
     except redis.exceptions.ResponseError:
@@ -37,52 +102,21 @@ def create_hnsw_index():
     )
     print("Index created successfully.")
 
-# Add preprocessing
-def extract_text_from_pdf(pdf_path):
-    """Extract text from a PDF file."""
-    doc = fitz.open(pdf_path)
-    text_by_page = []
-    for page_num, page in enumerate(doc):
-        text_by_page.append((page_num, page.get_text()))
-    return text_by_page
-
-
-def split_text_into_chunks(text, chunk_size=300, overlap=50):
-    """Split text into chunks of approximately chunk_size words with overlap."""
-    words = text.split()
-    chunks = []
-    for i in range(0, len(words), chunk_size - overlap):
-        chunk = " ".join(words[i : i + chunk_size])
-        chunks.append(chunk)
-    return chunks
-
-
-def process_pdfs(data_dir):
-    for file_name in os.listdir(data_dir):
-        if file_name.endswith(".pdf"):
-            pdf_path = os.path.join(data_dir, file_name)
-            text_by_page = extract_text_from_pdf(pdf_path)
-            for page_num, text in text_by_page:
-                chunks = split_text_into_chunks(text)
-                # print(f"  Chunks: {chunks}")
-                for chunk_index, chunk in enumerate(chunks):
-                    # embedding = calculate_embedding(chunk)
-                    embedding = get_embedding(chunk)
-                    store_embedding(
-                        file=file_name,
-                        page=str(page_num),
-                        # chunk=str(chunk_index),
-                        chunk=str(chunk),
-                        embedding=embedding,
-                    )
-            print(f" -----> Processed {file_name}")
-
-
-
 def main():
-    data = 1
+    # Initialize the document processor
+    processor = DocumentProcessor()
     
-
+    # Clear existing Redis store
+    clear_redis_store()
+    
+    # Create the vector similarity index
+    create_hnsw_index()
+    
+    # Process PDFs from the data directory
+    data_dir = "data"
+    processor.process_pdfs(data_dir)
+    
+    print("Processing complete!")
 
 if __name__ == '__main__':
     main()
