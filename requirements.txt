@@ -4,11 +4,7 @@ transformers==4.35.2
 huggingface_hub==0.16.4
 torch==2.2.0
 tensorflow==2.15.0
-<<<<<<< Updated upstream
-scikit-learn>=1.4.1
-=======
 scikit-learn==1.6.1
->>>>>>> Stashed changes
 numpy==1.26.4
 pandas==2.2.0
 chromadb
