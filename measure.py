@@ -3,14 +3,6 @@ import time
 from typing import Any, Callable, Tuple
 import tracemalloc
 
-'''To store the memory and time of a function, after using these wrappers on a function do the following.
-
-Store outputs in variables:
-result, memory_used, execution_time_ns, execution_time_ms = create_large_list()
-
-After this you can use the values as needed
-'''
-
 
 def timer(func: Callable[..., Any]) -> Callable[..., Any]:
     """
@@ -21,14 +13,6 @@ def timer(func: Callable[..., Any]) -> Callable[..., Any]:
 
     Returns:
     Callable[..., Any]: The wrapped function.
-
-    Example:
-    @timer
-    def my_function():
-        # code to be timed
-        pass
-
-    my_function()  # prints the execution time of my_function
     """
     @wraps(func)
     def timeit_wrapper(*args: Tuple[Any], **kwargs: Any) -> Any:

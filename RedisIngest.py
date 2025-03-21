@@ -3,7 +3,8 @@ import numpy as np
 import fitz
 import os
 import redis
-from Embedding import MiniLMEmbedder  # Using MiniLM as it's lighter and doesn't need instructions
+from Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
+from measure import timer, memory
 
 # Redis client
 redis_client = redis.Redis(host="localhost", port=6380, db=0)
@@ -13,10 +14,12 @@ INDEX_NAME = "embedding_index"
 DOC_PREFIX = "doc:"
 DISTANCE_METRIC = "COSINE"
 
+
+
 class DocumentProcessor:
     def __init__(self):
         """Initialize the document processor with the embedding model"""
-        self.embedder = MiniLMEmbedder()
+        self.embedder = InstructorEmbedder()
         
     def get_embedding(self, text: str) -> np.ndarray:
         """Get embedding for a single text chunk"""
@@ -40,6 +43,8 @@ class DocumentProcessor:
             }
         )
 
+    @timer
+    @memory
     def process_pdfs(self, data_dir: str):
         """Process all PDFs in the given directory"""
         for file_name in os.listdir(data_dir):
@@ -114,9 +119,11 @@ def main():
     
     # Process PDFs from the data directory
     data_dir = "data"
-    processor.process_pdfs(data_dir)
+    (result, memory_used), time_taken = processor.process_pdfs(data_dir)
     
     print("Processing complete!")
+    print(f"Total Time: {time_taken:.2f} ms")
+    print(f"Total Memory: {memory_used:.2f} KB")
 
 if __name__ == '__main__':
     main()
