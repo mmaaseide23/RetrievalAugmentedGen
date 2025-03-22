@@ -1,0 +1,4 @@
+faiss_data/
+faiss_data_*/
+__pycache__/
+
