@@ -19,7 +19,7 @@ DISTANCE_METRIC = "COSINE"
 class DocumentProcessor:
     def __init__(self):
         """Initialize the document processor with the embedding model"""
-        self.embedder = InstructorEmbedder()
+        self.embedder = MiniLMEmbedder()
         
     def get_embedding(self, text: str) -> np.ndarray:
         """Get embedding for a single text chunk"""
@@ -76,7 +76,7 @@ class DocumentProcessor:
         return text_by_page
 
     @staticmethod
-    def split_text_into_chunks(text: str, chunk_size: int = 300, overlap: int = 50):
+    def split_text_into_chunks(text: str, chunk_size: int = 500, overlap: int = 100):
         """Split text into chunks of approximately chunk_size words with overlap."""
         words = text.split()
         chunks = []

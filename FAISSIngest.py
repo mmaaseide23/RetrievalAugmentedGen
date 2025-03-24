@@ -124,16 +124,12 @@ class FAISS:
 def main():
     # Define embedders to test
     embedders = [
-        ("MiniLM", MiniLMEmbedder()),
-        ("MPNet", MPNetEmbedder()),
         ("Instructor", InstructorEmbedder())
     ]
     
     # Define configurations to test
     configs = [
-        {"chunk_size": 200, "overlap": 50},
-        {"chunk_size": 500, "overlap": 100},
-        {"chunk_size": 1000, "overlap": 200}
+        {"chunk_size": 500, "overlap": 100}
     ]
     
     # List to store results

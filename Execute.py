@@ -77,7 +77,7 @@ def generate_rag_response(query, context_results):
 
     prompt = f"""You are a helpful AI assistant. 
     Use the following context to answer the query as accurately as possible. If the context is 
-    not relevant to the query, say 'I don't know'.
+    not relevant to the query, say 'I don't know'. If you feel like you don't have enough information, say 'I don't know'.
 
 Context:
 {context_str}
@@ -88,7 +88,7 @@ Answer:"""
 
     # Generate response using Ollama
     response = ollama.chat(
-        model="mistral:latest", messages=[{"role": "user", "content": prompt}]
+        model="mixtral:latest", messages=[{"role": "user", "content": prompt}]
     )
 
     return response["message"]["content"]
