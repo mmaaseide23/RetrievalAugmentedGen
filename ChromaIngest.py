@@ -6,6 +6,7 @@ import redis
 import chromadb
 from chromadb.utils import embedding_functions
 from pathlib import Path
+from measure import timer, memory
 
 class Chroma:
     def __init__(self, collection_name="awesome_collection", embedding_function=None):
@@ -56,8 +57,9 @@ class Chroma:
             metadatas=[{"file": file, "page": page}],
             ids=[f"{file}:{page}:{hash(chunk)}"]
         )
-
-    def process_pdfs(self, data_dir):
+    @timer
+    @memory
+    def process_pdfs(self, data_dir, chunk_size, overlap):
         for file_name in os.listdir(data_dir):
             if file_name.endswith(".pdf"):
                 pdf_path = os.path.join(data_dir, file_name)
@@ -65,7 +67,7 @@ class Chroma:
                 
                 text_by_page = self.extract_text_from_pdf(pdf_path)
                 for page_num, text in text_by_page:
-                    chunks = self.split_text_into_chunks(text)
+                    chunks = self.split_text_into_chunks(text, chunk_size, overlap)
                     
                     for chunk in chunks:
                         embedding = self.embedding_function([chunk])[0]
@@ -79,10 +81,69 @@ class Chroma:
                 print(f"Processed {file_name}")
 
 def main():
+
     chroma = Chroma(collection_name="awesome_collection")
     
     data_dir = "Data" 
     chroma.process_pdfs(data_dir)
 
+def main():
+    # Define embedders to test
+    embedders = [
+         ("Instructor", "hkunlp/instructor-xl"),
+        ("MiniLM", None),
+        ("MPNet", "all-mpnet-base-v2")
+       
+    ]
+    
+    # Define configurations to test
+    configs = [
+        {"chunk_size": 200, "overlap": 50},
+        {"chunk_size": 500, "overlap": 100},
+        {"chunk_size": 1000, "overlap": 200}
+    ]
+    
+    # List to store results
+    results = []
+    
+    # Test all combinations
+    for embedder_name, embedder in embedders:
+        for config in configs:
+            print(f"\n=== Testing Configuration ===")
+            print(f"Embedder: {embedder_name}")
+            print(f"Chunk size: {config['chunk_size']}")
+            print(f"Overlap: {config['overlap']}")
+            
+            # Initialize FAISS with current configuration
+            faiss_db = Chroma(
+                collection_name=f"awesome_collection_{embedder_name}_{config['chunk_size']}_{config['overlap']}",
+                embedding_function=embedder
+            )
+            
+            # Process PDFs
+            data_dir = "Data"
+            (result, memory_used), time_taken = faiss_db.process_pdfs(data_dir, config["chunk_size"], config['overlap'])
+            
+            # Store results
+            results.append({
+                'embedder': embedder_name,
+                'chunk_size': config['chunk_size'],
+                'overlap': config['overlap'],
+                'time_ms': time_taken,
+                'memory_kb': memory_used
+            })
+            
+            print("\nResults:")
+            print(f"Total Time: {time_taken:.2f} ms")
+            print(f"Total Memory: {memory_used:.2f} KB")
+            
+  
+    
+    # Create DataFrame and save to CSV
+    df = pd.DataFrame(results)
+    csv_filename = f'chroma_performance.csv'
+    df.to_csv(csv_filename, index=False)
+    print(f"\nPerformance metrics saved to: {csv_filename}")
+    
 if __name__ == '__main__':
     main()
