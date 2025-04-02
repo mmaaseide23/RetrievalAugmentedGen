@@ -109,6 +109,7 @@ def create_hnsw_index():
 def main():
     embedders = [
         ("Instructor", InstructorEmbedder()),
+<<<<<<< Updated upstream
         ("MPNet", MPNetEmbedder()),
         ("MiniLM", MiniLMEmbedder())
     ]
@@ -145,11 +146,47 @@ def main():
                 'memory_kb': memory_used
             })
 
+=======
+        ("Mini", MiniLMEmbedder()),
+        ("MPNet", MPNetEmbedder())]
+    
+    configs = [
+        {"chunk_size": 200, "overlap": 50},
+        {"chunk_size": 500, "overlap": 100},
+        {"chunk_size": 1000, "overlap": 200}
+    ]
+    
+    results = []
+    
+    for embedder_name, embedder in embedders:
+        for config in configs:
+            processor = DocumentProcessor()
+    
+            clear_redis_store()
+    
+    # Create the vector similarity index
+            create_hnsw_index()
+    
+    # Process PDFs from the data directory
+            data_dir = "data"
+            (result, memory_used), time_taken = processor.process_pdfs(data_dir)
+    
+>>>>>>> Stashed changes
             print("Processing complete!")
             print(f"Total Time: {time_taken:.2f} ms")
             print(f"Total Memory: {memory_used:.2f} KB")
 
+<<<<<<< Updated upstream
     # Create DataFrame and save to CSV
+=======
+            results.append({
+                'embedder': embedder_name,
+                'chunk_size': config['chunk_size'],
+                'overlap': config['overlap'],
+                'time_ms': time_taken,
+                'memory_kb': memory_used
+            })
+>>>>>>> Stashed changes
     df = pd.DataFrame(results)
     csv_filename = f'redis_performance.csv'
     df.to_csv(csv_filename, index=False)
