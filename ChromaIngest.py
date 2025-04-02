@@ -12,7 +12,7 @@ class Chroma:
     def __init__(self, collection_name="awesome_collection", embedding_function=None):
         self.collection_name = collection_name
         
-        self.client = chromadb.Client()
+        self.client = chromadb.PersistentClient(path="/Users/jeffreykrapf/Documents/Chroma_storage")
         
         if embedding_function is None:
             self.embedding_function = embedding_functions.DefaultEmbeddingFunction()
@@ -80,12 +80,7 @@ class Chroma:
                 
                 print(f"Processed {file_name}")
 
-def main():
 
-    chroma = Chroma(collection_name="awesome_collection")
-    
-    data_dir = "Data" 
-    chroma.process_pdfs(data_dir)
 
 def main():
     # Define embedders to test
@@ -115,14 +110,14 @@ def main():
             print(f"Overlap: {config['overlap']}")
             
             # Initialize FAISS with current configuration
-            faiss_db = Chroma(
+            chromadb = Chroma(
                 collection_name=f"awesome_collection_{embedder_name}_{config['chunk_size']}_{config['overlap']}",
                 embedding_function=embedder
             )
             
             # Process PDFs
             data_dir = "Data"
-            (result, memory_used), time_taken = faiss_db.process_pdfs(data_dir, config["chunk_size"], config['overlap'])
+            (result, memory_used), time_taken = chromadb.process_pdfs(data_dir, config["chunk_size"], config['overlap'])
             
             # Store results
             results.append({
