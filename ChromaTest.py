@@ -17,7 +17,6 @@ def generate_rag_response(query, context_results, modelrun):
     """
     Generate a RAG response using the retrieved context and the Ollama mistral model.
     """
-    # Format the context from the retrieved results
     context_str = "\n".join(
         [
             f"From {result.get('file', 'Unknown file')} (page {result.get('page', 'Unknown page')}, chunk: {result.get('chunk', 'N/A')}) with similarity {float(result.get('similarity', 0)):.2f}"
@@ -25,7 +24,6 @@ def generate_rag_response(query, context_results, modelrun):
         ]
     )
     
-    # Build the prompt that incorporates the context and the query
     prompt = f"""You are a helpful AI assistant.
 Use the following context to answer the query as accurately as possible.
 
@@ -36,7 +34,6 @@ Query: {query}
 
 Answer:"""
     
-    # generate response to prompt with model of choice
     response = ollama.chat(model=modelrun, messages=[{"role": "user", "content": prompt}])
     return response["message"]["content"]
 
@@ -45,7 +42,6 @@ def test_rag_performance(prompts):
     Iterates through every collection and prompt.
     Measures and records the performance of both the Chroma search and the RAG generation.
     """
-    # Define embedders and configurations
     embedders = [
         ("Instructor", "hkunlp/instructor-xl"),
         ("MiniLM", None),
@@ -80,12 +76,12 @@ def test_rag_performance(prompts):
                     @timer
                     @memory
                     def measure_rag():
-                        return generate_rag_response(prompt, context_results)
+                        return generate_rag_response(prompt, context_results, model)
                     
                     (rag_result, rag_memory), rag_time = measure_rag()
                     
                     results.append({
-                        "model": model
+                        "model": model,
                         "embedder": embedder_name,
                         "chunk_size": config["chunk_size"],
                         "overlap": config["overlap"],
@@ -105,16 +101,9 @@ def test_rag_performance(prompts):
     return results
 
 if __name__ == "__main__":
-    # Execute the performance test across all collections and prompts
     performance_results = test_rag_performance(prompts)
     
-    # Create a DataFrame and save the performance metrics to a CSV file
     df = pd.DataFrame(performance_results)
-    csv_filename = "chroma_rag_performance.csv"
-    df.to_csv(csv_filename, index=False)
-    print(f"\nPerformance metrics saved to: {csv_filename}")
 
 
-# we are also going to try three different models
 
-models = ["llama3.2:latest", "tinyllama:latest", "mistral:latest"]
