@@ -17,9 +17,9 @@ DISTANCE_METRIC = "COSINE"
 
 
 class DocumentProcessor:
-    def __init__(self):
+    def __init__(self, embedding_model):
         """Initialize the document processor with the embedding model"""
-        self.embedder = MiniLMEmbedder()
+        self.embedder = embedding_model
         
     def get_embedding(self, text: str) -> np.ndarray:
         """Get embedding for a single text chunk"""
@@ -45,15 +45,14 @@ class DocumentProcessor:
 
     @timer
     @memory
-    def process_pdfs(self, data_dir: str):
+    def process_pdfs(self, data_dir: str, chunking_size, overlap_size):
         """Process all PDFs in the given directory"""
         for file_name in os.listdir(data_dir):
             if file_name.endswith(".pdf"):
                 pdf_path = os.path.join(data_dir, file_name)
                 text_by_page = self.extract_text_from_pdf(pdf_path)
-                
                 for page_num, text in text_by_page:
-                    chunks = self.split_text_into_chunks(text)
+                    chunks = self.split_text_into_chunks(text, chunking_size, overlap_size)
                     for chunk in chunks:
                         # Get embedding for chunk
                         embedding = self.get_embedding(chunk)
@@ -108,22 +107,53 @@ def create_hnsw_index():
     print("Index created successfully.")
 
 def main():
-    # Initialize the document processor
-    processor = DocumentProcessor()
-    
-    # Clear existing Redis store
-    clear_redis_store()
-    
-    # Create the vector similarity index
-    create_hnsw_index()
-    
-    # Process PDFs from the data directory
-    data_dir = "data"
-    (result, memory_used), time_taken = processor.process_pdfs(data_dir)
-    
-    print("Processing complete!")
-    print(f"Total Time: {time_taken:.2f} ms")
-    print(f"Total Memory: {memory_used:.2f} KB")
+    embedders = [
+        ("Instructor", InstructorEmbedder()),
+        ("MPNet", MPNetEmbedder()),
+        ("MiniLM", MiniLMEmbedder())
+    ]
+
+    chunk_sizes = [200, 500, 1000]  # Example values
+    overlaps = [50, 100, 200]  # Example values
+    # List to store results
+    results = []
+
+    # Test all combinations
+    for embedder_name, embedder in embedders:
+        for i in range(len(chunk_sizes)):
+            # Initialize the document processor
+            processor = DocumentProcessor(embedder)
+
+            # Clear existing Redis store
+            clear_redis_store()
+
+            # Create the vector similarity index
+            create_hnsw_index()
+
+            curr_chunk =  chunk_sizes[i]
+            curr_overlap = overlaps[i]
+
+            # Process PDFs from the data directory
+            data_dir = "data"
+            (result, memory_used), time_taken = processor.process_pdfs(data_dir, curr_chunk, curr_overlap)
+
+            results.append({
+                'embedder': embedder_name,
+                'chunk_size': curr_chunk,
+                'overlap': curr_overlap,
+                'time_ms': time_taken,
+                'memory_kb': memory_used
+            })
+
+            print("Processing complete!")
+            print(f"Total Time: {time_taken:.2f} ms")
+            print(f"Total Memory: {memory_used:.2f} KB")
+
+    # Create DataFrame and save to CSV
+    df = pd.DataFrame(results)
+    csv_filename = f'redis_performance.csv'
+    df.to_csv(csv_filename, index=False)
+    print(f"\nPerformance metrics saved to: {csv_filename}")
 
 if __name__ == '__main__':
     main()
