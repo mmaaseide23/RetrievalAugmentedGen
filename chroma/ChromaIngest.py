@@ -57,6 +57,8 @@ class Chroma:
             metadatas=[{"file": file, "page": page}],
             ids=[f"{file}:{page}:{hash(chunk)}"]
         )
+    
+
     @timer
     @memory
     def process_pdfs(self, data_dir, chunk_size, overlap):
@@ -83,43 +85,35 @@ class Chroma:
 
 
 def main():
-    # Define embedders to test
     embedders = [
-         ("Instructor", "hkunlp/instructor-xl"),
+        ("Instructor", "hkunlp/instructor-xl"),
         ("MiniLM", None),
         ("MPNet", "all-mpnet-base-v2")
-       
-    ]
+        ]
     
-    # Define configurations to test
     configs = [
         {"chunk_size": 200, "overlap": 50},
         {"chunk_size": 500, "overlap": 100},
         {"chunk_size": 1000, "overlap": 200}
     ]
     
-    # List to store results
     results = []
     
-    # Test all combinations
     for embedder_name, embedder in embedders:
         for config in configs:
-            print(f"\n=== Testing Configuration ===")
+            print(f"Testing Configuration")
             print(f"Embedder: {embedder_name}")
             print(f"Chunk size: {config['chunk_size']}")
             print(f"Overlap: {config['overlap']}")
             
-            # Initialize FAISS with current configuration
             chromadb = Chroma(
                 collection_name=f"awesome_collection_{embedder_name}_{config['chunk_size']}_{config['overlap']}",
                 embedding_function=embedder
             )
             
-            # Process PDFs
-            data_dir = "Data"
+            data_dir = "/Users/jeffreykrapf/Desktop/ds4300/RetrievalAugmentedGen/Data"
             (result, memory_used), time_taken = chromadb.process_pdfs(data_dir, config["chunk_size"], config['overlap'])
             
-            # Store results
             results.append({
                 'embedder': embedder_name,
                 'chunk_size': config['chunk_size'],
@@ -134,7 +128,6 @@ def main():
             
   
     
-    # Create DataFrame and save to CSV
     df = pd.DataFrame(results)
     csv_filename = f'chroma_performance.csv'
     df.to_csv(csv_filename, index=False)
