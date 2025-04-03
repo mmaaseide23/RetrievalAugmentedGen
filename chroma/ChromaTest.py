@@ -1,8 +1,8 @@
 import os
 import pandas as pd
-from chroma.ChromaIngest import Chroma  # Assumes your Chroma class is in Chroma.py
+from chroma.ChromaIngest import Chroma  
 import ollama
-from measure import timer, memory  # Decorators to measure execution time and memory usage
+from measure import timer, memory 
 
 prompts = [
     "Write a Mongo query based on the movies data set that returns the titles of all movies released between 2010 and 2015 from the suspense genre.",
@@ -24,14 +24,14 @@ def generate_rag_response(query, context_results, modelrun):
     )
     
     prompt_text = f"""You are a helpful AI assistant.
-Use the following context to answer the query as accurately as possible.
+    Use the following context to answer the query as accurately as possible.
 
-Context:
-{context_str}
+    Context:
+    {context_str}
 
-Query: {query}
+    Query: {query}
 
-Answer:"""
+    Answer:"""
     
     response = ollama.chat(model=modelrun, messages=[{"role": "user", "content": prompt_text}])
     return response["message"]["content"]
@@ -92,9 +92,7 @@ def test_rag_performance(prompts):
     
     return results
 
+
 if __name__ == "__main__":
     performance_results = test_rag_performance(prompts)
     
-    df = pd.DataFrame(performance_results)
-    df.to_csv("chroma_rag_performance.csv", index=False)
-    print("Performance metrics saved to chroma_rag_performance.csv")
