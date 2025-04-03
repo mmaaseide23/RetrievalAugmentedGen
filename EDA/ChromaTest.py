@@ -2,7 +2,6 @@ import os
 import pandas as pd
 from chroma.ChromaIngest import Chroma  
 import ollama
-from measure import timer, memory 
 
 prompts = [
     "Write a Mongo query based on the movies data set that returns the titles of all movies released between 2010 and 2015 from the suspense genre.",

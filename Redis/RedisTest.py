@@ -3,13 +3,13 @@ import numpy as np
 import fitz
 import os
 import redis
-from Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
-from measure import timer, memory
+from FAISS.Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
+from FAISS.measure import timer, memory
 from redis.commands.search.query import Query
 
 
 # Redis client
-redis_client = redis.Redis(host="localhost", port=6379, db=0)
+redis_client = redis.Redis(host="localhost", port=6380, db=0)
 
 VECTOR_DIM = 384  
 INDEX_NAME = "embedding_index"

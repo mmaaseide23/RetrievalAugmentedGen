@@ -5,7 +5,7 @@ import os
 import chromadb
 from chromadb.utils import embedding_functions
 from pathlib import Path
-from measure import timer, memory
+from FAISS.measure import timer, memory
 
 
 class Chroma:
