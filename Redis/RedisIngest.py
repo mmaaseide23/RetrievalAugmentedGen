@@ -3,8 +3,8 @@ import numpy as np
 import fitz
 import os
 import redis
-from Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
-from measure import timer, memory
+from FAISS.Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
+from FAISS.measure import timer, memory
 
 # Redis client
 redis_client = redis.Redis(host="localhost", port=6380, db=0)

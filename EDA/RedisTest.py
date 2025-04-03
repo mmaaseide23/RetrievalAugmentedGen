@@ -3,8 +3,8 @@ import numpy as np
 import fitz
 import os
 import redis
-from Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
-from measure import timer, memory
+from FAISS.Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
+from FAISS.measure import timer, memory
 from redis.commands.search.query import Query
 
 
