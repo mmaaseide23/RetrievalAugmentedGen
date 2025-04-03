@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import ollama
 import os
-from FAISS.Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
+from Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
 from FAISS.FAISSIngest import FAISS
 from FAISS.measure import timer, memory
 import csv

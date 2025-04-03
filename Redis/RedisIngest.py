@@ -3,7 +3,7 @@ import numpy as np
 import fitz
 import os
 import redis
-from FAISS.Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
+from Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
 from FAISS.measure import timer, memory
 
 # Redis client

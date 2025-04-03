@@ -1,7 +1,7 @@
 import redis
 import json
 import numpy as np
-from FAISS.Embedding import MiniLMEmbedder  # Import MiniLM embedding model
+from Embedding import MiniLMEmbedder  # Import MiniLM embedding model
 from redis.commands.search.query import Query
 import ollama
 
