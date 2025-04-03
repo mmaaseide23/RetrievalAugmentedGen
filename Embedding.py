@@ -9,7 +9,7 @@ from sentence_transformers import SentenceTransformer
 class InstructorEmbedder:
     def __init__(self):
         """Initialize the DocumentEmbedder with the InstructorXL model"""
-        self.model = SentenceTransformer('hkunlp/instructor-xl')
+        self.model = INSTRUCTOR('hkunlp/instructor-xl')
         
     def embed_chunks(self, chunks):
         """Embed a list of text chunks using the INSTRUCTOR model"""

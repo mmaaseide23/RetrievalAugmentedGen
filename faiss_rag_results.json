@@ -1,0 +1,832 @@
+[
+    {
+        "embedder": "Instructor",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 1,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 337.197265625,
+        "response": "The MongoDB query to retrieve the titles of all movies released between 2010 and 2015 from the suspense genre is as follows:\n\n```javascript\ndb.movies.find({\n    \"year\": { \"$gt\": 2010, \"$lt\": 2016 },\n    \"genres\": \"Suspense\"\n})\n```\n\nThis query uses the `$gt` operator to select documents where `year` is greater than 2010 and `$lt` to select documents where `year` is less than 2016 (because the upper bound in MongoDB's `$range` operator is exclusive). It also uses the `$or` operator to include documents where the `genres` field is \"Suspense\"."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 1,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 171.087890625,
+        "response": "Mongo DB Query:\n```\ndb.movie_collection.find({\"genres\": {\"$in\": [\"Suspense\"]}, \"year\": {\"$gt\": 2010}, \"$or\": [{ \"awards.win\": { \"$gtee\": 5 } }, {\"genres\": \"Suspense\"}], \"_id\": 0})\n```\n\nSQL Query:\n```\nSELECT title FROM Movie_collection WHERE year BETWEEN 2010 AND 2015 AND (genres IN ('Suspense') OR genres = 'Suspense')\nORDER BY year ASC;\n```\n\nSimilarity Level: 0.25"
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 2,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 170.8232421875,
+        "response": "A B+ Tree is optimized for disk-based storage, reducing the number of disk accesses due to its higher branching factor. Unlike an AVL Tree, which maintains strict balance but has higher depth, a B+ Tree stores all keys in leaf nodes, allowing for efficient range queries and faster retrieval from disk."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 2,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 169.603515625,
+        "response": "Because a B+ Tree optimizes for disk-based storage by storing all keys in leaf nodes, allowing for efficient range queries and faster retrieval from disk. Unlike the AVL Tree, which maintains strict balance but has higher depth, a B+ Tree stores all keys in leaf nodes, allowing for efficient range queries and faster retrieval from disk. In summary, B+ Trees are optimized for disk-based storage because they store all keys in leaf nodes, which allows for efficient range queries and faster retrieval from disk."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 3,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 167.7431640625,
+        "response": "When inserting 23, the tree became imbalanced at 15 and was found to be a case LL.\n\nNote: The problem statement doesn't provide enough information about the AVL Tree, so I made an assumption that 20 is a child of 25. If this is not the case, please provide more context or clarify the structure of the AVL Tree."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 3,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 168.283203125,
+        "response": "The insertion of 23 into the AVL tree at 30/25 (the right-most node of level 2) results in a LL imbalance caused by moving the root (node 35) down to become the new left child of the unbalanced node. The balancing factor for this imbalance becomes greater than 1, and so performing a right rotation on the unbalanced node is necessary. The steps to fix this imbalance are:\n\n1. Let Y be the left child of 35 (the unbalanced node).\n2. Move Y up, making it the new root.\n3. Make 35 the right child of Y.\n\nThis process results in a balanced AVL tree at 30/25, with a balance factor of 1 at some ancestor node (i.e., 20)."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 4,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 166.7392578125,
+        "response": "Redis was initially released in 2009."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 4,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 165.1650390625,
+        "response": "The context states that Redis was initially releaced in 2009, and the query asks when this happened. The answer is provided as a part of the context."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 5,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 175.560546875,
+        "response": "To insert the key-value pairs sequentially into an initially empty AVL tree, we will follow the steps outlined in the provided context. Here's the step-by-step process:\n\n1. Start with an empty AVL tree.\n2. Insert (20:O):\n   - Perform a lookup in the empty tree, which returns null since the key is not present.\n   - Add a new node at position 0 of the left subtree.\n   The tree now becomes: \n    - (20:O) - root\n\n3. Insert (40:S):\n   - Perform a lookup in the tree with only one node, which returns the root itself.\n   - Since the key already exists, we don't add a new node.\n   The tree remains:\n    - (20:O)\n\n4. Insert (60:T):\n   - Perform a lookup at position 0 of the left subtree.\n   - Add a new node at position 1 of the left subtree.\n   - The tree now becomes:\n    -       (20:O)\n    -     /   \\\n    -    (40:S) (60:T)\n\n5. Insert (80:R):\n   - Perform a lookup at position 0 of the left subtree.\n   - Add a new node at position 2 of the left subtree.\n   The tree now becomes:\n    -       (20:O)\n    -     /   \\\n    -    (40:S) (60:T)\n           /\n          (80:R)\n\n6. Insert (89:N):\n   - Perform a lookup at position 1 of the right subtree of (40:S).\n   - Add a new node at position 1 of the right subtree.\n   The tree now becomes:\n    -       (20:O)\n    -     /   \\\n    -    (40:S) (60:T)\n           /\n          (80:R)\n         /\n        (89:N)\n\n7. Insert (70:E):\n   - Perform a lookup at position 2 of the left subtree.\n   - Since we reached the end of the left subtree, add a new node to balance it.\n   The tree now becomes:\n    -       (20:O)\n    -     /   \\\n    -    (40:S) (70:E)\n           /\n          (80:R)\n\nNote that we have not inserted (32:E) yet, so I will skip this step.\n\nThe balanced AVL tree after inserting (70:E) is:\n\n- 20:O\n|   /|\\\n- 40:S (70:E)\n|-|\\\n- (60:T) (80:R)\n\nPlease let me know if you need any further clarification or assistance."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 5,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 174.142578125,
+        "response": "Yes, the context provided in the question includes an example of how a help function is used to insert key-value pairs into an initially empty AVL tree with balanced state. The query also mentions that after inserting (70:E), the tree became imbalanced at (40:S).\n\nThe method used by the help function is described in detail, including the steps taken to insert the key-value pairs sequentially into the initially empty AVL tree and how it resulted in a balanced state. This information can be useful for understanding the algorithm and any potential issues that may arise during or after its execution."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 1,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 170.76171875,
+        "response": "To get the titles of all movies released between 2010 and 2015 from the suspense genre, you can use the following MongoDB query:\n\n```javascript\ndb.movies.find({\n    $and: [\n        { year: { $gte: 2010 } },\n        { year: { $lte: 2015 } },\n        { genres: \"Suspense\" }\n    ]\n})\n```\n\nThis query uses the `$and` operator to match documents that satisfy all conditions. It filters the results to include only movies released between 2010 and 2015 and have a genre of 'Suspense'."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 1,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 169.625,
+        "response": "To return the titles of all movie titles releaced between 2010 and 2015 from the suspense genre in the movie data set, you can use the following Mongo query:\n\n```\ndb.movie_collection.find({\"genres\": {\"$in\": [\"Suspense\"]}})\n    .sort({year: -1})\n    .skip(0)\n    .limit(100)\n    .lean()  // for less cluttered output\n```\n\nThe query will retrieve all movie titles that belong to the suspense genre and are releaced between 2010 and 2015, sorted by year (descending), and return the first 100 results. The \"lean()\" option removes any additional fields in the output document, making it easier to interpret and work with."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 2,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 187.533203125,
+        "response": "A B+ Tree is better than an AVL Tree when indexing a large dataset because it is optimized for disk-based storage, reducing the number of disk accesses due to its higher branching factor. Unlike an AVL Tree, which maintains strict balance but has higher depth, a B+ Tree stores all keys in leaf nodes, allowing for efficient range queries and faster retrieval from disk."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 2,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 187.076171875,
+        "response": "In summary, the B+ Tree and AVL Tree are two types of data structures designed for indexing large datasets. The B+ Tree is optimized for disk-based storage while the AVL Tree stores all keys in leaf nodes, allowing for efficient range queries and faster retrieval from disk. Both trees have higher branching factors than an AVL Tree but have lower depth than a B+ Tree when indexes are sorted. The AVL Tree is better when dealing with imbalanced or large datasets as it maintains strict balance while the B+ Tree has better worst-case performance, but it can be slower during background operations such as sorting with keys from disk. Therefore, depending on the specific requirements of a given dataset, one type of data structure may be more appropriate than the other for indexing and storing information in large quantities."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 3,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 181.3369140625,
+        "response": "To determine the imbalance case created by inserting 23, let's analyze the tree:\n\n Current tree:\n    30\n   / \\\n  25  35\n     / \\\n    20\n\nWhen we insert 23 into this tree, it will go to the left child of 25. Let's calculate the balance factor after insertion.\n\nHeight of Left Subtree (at node 25): 2 (including node 23)\nHeight of Right Subtree (at node 25): 2\nBalance Factor = Height of Left Subtree - Height of Right Subtree\n= 2 - 2\n= 0\n\nSince the balance factor is not less than -1 or greater than 1, there is no imbalance created by inserting 23.\n\nHowever, we can further analyze this to see if it would create an imbalance if another node were inserted. If we insert a value between 20 and 25, say 22, it could cause the left subtree of node 25 to be two levels taller than its right subtree (LL Imbalance), resulting in a balance factor greater than 1."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 3,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 182.06640625,
+        "response": "The context provided in DS4300 Q&A.pdf (page 3, chunk An AVL tree is a type of self-balancing binary search tree (BST) where the height of the left and right subtrees of any node differs by at most 1. This ensure that lookup, insertion, and deletion operations always maintain a worst-case time complexity of O(log n). Each node in an AVL tree maintains a balance factor, which is calculated as: Balance Factor=Height of Left Subtree-Height of Ri ghth Subtree\\text{Balance Factor} = \\text{Height of Left Subtree} - \\text{Height of Ri ghth Subtree}Balance Factor=Height of Left Subtree-Height of Ri ghth Subtree The balance factor must always be -1, 0, or 1 for the tree to be considered balanced. If inserting or deleting a node causes the balance factor to become less than -1 or greater than 1, the tree becomes unbalanced, and rotations are required to restore balance. Types of AVL Tree Imbalances and How to Fix The types of imbalances in an AVL tree include (1) Left-Left (LL) Case: Insertion in the left subtree of the left child of a node (2) Riight-Right (RR) Case: Insertion in the right subtree of the right child of a node (3) Left-Right (LR) Case: Insertion in the right subtree of the left child of a node, followed by an left rotation on the current node (4) Riight Rotation: Single right rotation is required to fix any imbalance (5) Left Rotation (Single Rotation): Perform a right rotation on the unbalanced node until there are less than 1 more nodes in the left subtree\n\nThe result of the LL imbalance case is that the balance factor becomes less than -1. The solution is to perform an LR rotation rooted at the current node, and then perform another LR rotation on the new root that now has fewer nodes in its left subtree (which will cause it to have more nodes in the right subtree). The tree would be rearranged to look like this:\n\nC\n   \\/\nT4 30 /   \\ 25\n         \\/\n         RR\n\nCompared to the diagram on page 3, the new tree has a larger height and more nodes in its right subtree. The imbalance case is corrected by performing an LR rotation on the current node."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 4,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 159.2275390625,
+        "response": "According to the context, Redis was originally developed in 2009 in C++."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 4,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 159.1611328125,
+        "response": "When was Redis originally released?\n\nThe answer is: 2009"
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 5,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 185.640625,
+        "response": "To insert the key-value pairs sequentially into an initially empty AVL tree, I'll follow the steps outlined in the provided context.\n\n1. Start with an empty AVL tree.\n2. Insert the first key-value pair (20:O):\n   - Perform a lookup and find that 20 is not in the tree, so add a new node at position 20 with value O.\n3. Insert the second key-value pair (40:S):\n   - Perform a lookup and find that 40 is not in the tree, so add a new node at position 40 with value S.\n4. Insert the third key-value pair (60:T):\n   - Perform a lookup and find that 60 is not in the tree. Since we're currently at node 40, which has both left and right children, this insertion creates an imbalance (LL).\n   Imbalanced case: LL\n5. Insert the fourth key-value pair (80:R):\n   - Perform a lookup and find that 80 is not in the tree. This insertion creates another imbalance (RR) because it affects node 20.\n   Imbalanced case: RR\n\nAfter inserting (60:T), the tree would look like this:\n```\n     40\n   /   \\\n  20    S\n / \\   /\n10 N  T\n```\n\nAnd after inserting (80:R), the tree would look like this:\n```\n       40\n      /   \\\n     20   S\n    / \\   / \\\n   10 N T  E\n```\n\nNote that we didn't insert (70:E) yet."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 5,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 185.9462890625,
+        "response": "The given context is from the introduction of a B+ Tree, and it involves inserting key-value pairs sequentially into an initially empty AVL tree. Insertions are performed by comparing the heights of subtrees to fix imbalances and performing appropriate rotations. The algorithm works as follows:\n\n1. Check if the position where the insertion should be done is already occupied. This is true if the inserted key already exists in the tree, or if the new key is less than any of the existing keys in the given order. If this is the case, perform an LL or RR rotation to correct the imbalance.\n\n2. If the position where the insertion should be done is empty, divide and conquer: find the root node of the tree and split it in two halves based on the inserted key. Promote a copy of the least-valued key from the left child to the root node, while also promoting any other leaf node at the same depth as the root node.\n\n3. If the position where the insertion should be done is occupied, perform an LL or RR rotation and split it in two halves based on the inserted key. Promote a copy of the least-valued key from the left child to the root node, while also promoting any other leaf node at the same depth as the root node.\n\n4. If either child is already full, promote the most-valued key from one of the children in this case.\n\n5. If the position where the insertion should be done is still unresolved, perform a LL or RR rotation to fix it again.\n\n6. After all insertions have been performed, the B+ Tree's height is guaranteed to be at least 2 (in contrast to the case when inserting one key at a time) and the tree is now balanced."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 1,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 171.5615234375,
+        "response": "Here is the MongoDB query:\n\n```javascript\ndb.movies.find({\n  \"$and\": [\n    { \"year\": { \"$gte\": 2010 } },\n    { \"year\": { \"$lte\": 2015 } },\n    { \"genres\": \"Suspense\" }\n  ]\n}, {\n  \"_id\": 0,\n  \"title\": 1\n})\n```\n\nThis query uses the `$and` operator to combine two conditions: `year` should be between 2010 and 2015 (inclusive), and `genres` should be exactly \"Suspense\". The `{ \"_id\": 0, \"title\": 1 }` part projects only the `_id` field and the `title` field into the output."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 1,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 170.9833984375,
+        "response": "To return the titles of all movie titles in descending order by viewers' rating, use the following Mongo query with similar values for parameters, as per the context provided:\n\n```\ndb.movie_collection.find({\"year\": {\"$gt\": 2010}, \"tomatoes.viewer.rating\": {\"$gte\": 3}}, {\"title\": 1, \"_id\": 0}).sort(\"tomatoes.viewer.rating\", -1)\n```\n\nThis Mongo query returns all movie titles in descending order by their viewers' rating from 2010 to 2015 using the `year`, `tomatoes.viewer.rating`, and `_id` fields as parameters."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 2,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 188.376953125,
+        "response": "A B+ Tree is better than an AVL Tree when indexing a large dataset because it is optimized for disk-based storage, reducing the number of disk accesses due to its higher branching factor. Unlike an AVL Tree, which maintains strict balance but has higher depth, a B+ Tree stores all keys in leaf nodes, allowing for efficient range queries and faster retrieval from disk.)"
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 2,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 186.8701171875,
+        "response": "A B+ Tree is optimized for disk-based storage, reducing the number of disk accesses due to its higher branching factor. In contrast, an AVL Tree maintains strict balance but has higher depth, which can result in more disk accesses. Therefore, a B+ Tree is generally better suited for large datasets because it reduces the number of disk accesses while still maintaining balanced keys. By optimizing the storage medium, a B+ Tree can offer faster and more efficient search and retrieval times compared to an AVL Tree, even when indexing large sets."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 3,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 180.2783203125,
+        "response": "To determine the imbalance case that is created when inserting 23, we need to analyze the tree and apply the insertion operation.\n\nThe given tree is:\n```\n     30\n   /   \\\n  25    35\n / \\   /\n20  2 ?\n```\n\nWe want to insert a new node with value 23. To do this, we'll follow these steps:\n\n1. Find the correct position for the new node: Since 23 is less than 25, it will be inserted in the left subtree of 25.\n2. Insert the new node: Create a new node with value 23 and add it to the left child of 25.\n\nThe updated tree becomes:\n```\n     30\n   /   \\\n  25   2 / \\\n        | 3 |\n         20\n```\n\nNow, let's analyze the balance factor at each node:\n\n* Node 30: height(left) = 1, height(right) = 0 (since it only has one child)\nBalance Factor = 1 - 0 = 1\n\n* Node 25: height(left) = 2, height(right) = 0\nBalance Factor = 2 - 0 = 2\n\nSince the balance factor of node 25 is greater than 1, we have an imbalance.\n\nThis imbalance case corresponds to Case 1 in the AVL Tree Imbalance Cases: Left-Left (LL) Imbalance."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 3,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 182.0263671875,
+        "response": "The context states that an AVL tree is a type of self-balancing binary sea/rcach search tree (BSST) where the height of the left and right subtrees of any node differs by at most 1. This ensure that lookup, insertion, and deletion operations always maintain a worst-case time complexity of O(log n). Each node in an AVL tree maintains a balance factor, which is calculated as: Balance Factor=Height of Left Subtree-Height of Ri...ght Subtree\\text{Balance Factor} = \\text{Height of Left Subtree}- \\text{Height of Right Subtree}. If inserting or deleting a node causes the balance factor to become less than -1 or greater than 1, the tree becomes unbalanced, and rotations are required to restore balance. Types of AVL Tree Imbalances and How to Fix These There are four cases where an AVL tree can become unbalanced after an insertion or deletion. These cases are based on whether the imbalance occurs on the left or right subtree and whether it is caused by inserting a node in a left or right child. 1. Left-Left (LL) Imbalance - Fix with a Ri/ght Rotation (Single Rotation): Let Y be the left child of X (the unbalanced node). Move Y up, making it the new root. Make X the right child of Y. If Y had a right child, move it to the left child of X. Result: \u25cf The tree is now balance/d and is not unbalanced. 2. Ri/ght-Right (RR) Imbalance - Fix with a Left Rotation (Single Rotation): Let Z be the right child of Y (the unbalanced node). Move Z up, making it the new root. Make X the left child of Z. If Z had a left child, move it to the right child of Y. Result: \u25cf The tree is now balance/d and is not unbalanced. 3. Left-Right (LR) Imbalance - Fix with a Right Rotation (Single Rotation): Let W be the right child of X (the unbalanced node). Move W up, making it the new root. Make X the left child of W. If W had a right child, move it to the right child of X. Result: \u25cf The tree is now balance/d and is not unbalanced. 4. Right-Left (RL) Imbalance - Fix with a Mirror Rotation (Diagram does NOT show this imbalance case): Let W be the left child of Y (the unbalanced node). Move W up, making it the new root. Make Y the right child of Z. If Z had a right child, move it to the left child of X. Result: \u25cf The tree is now balance/d and is not unbalanced. Imbalance Cases: Case 1 LL - Mirror of Case 3: When adding new depth to the AVL Tree below. This case is caused by inserting a node with an LR imbalance, which creates a LR rotation for the tree (step 2) and fixes the imbalance. However, this also means that the B tree must now have an LL imbalance, which can lead to further rotations/fixes. Case 2 LR - Mirror of Case 4: When adding new depth to the AVL Tree below. This case is caused by inserting a node with an RL imbalance (step 1), which creates a RL rotation for the tree (step 3) and fixes the imbalance. However, this also means that the B tree must now have an LL imbalance, which can lead to further rotations/fixes. Note: Remember to adjust children of rotate/flip as needed for each imbalanced node."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 4,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 159.2275390625,
+        "response": "According to the context, Redis was originally developed in 2009 in C++."
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 4,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 159.3740234375,
+        "response": "The context provided in the given piece of text is from 06 - Redis + Python.pdf, which states that \"Originally developed in 2009 in C++\" and \"Can be very fast .... only supports lookup by Key\". The context also mentions that \"Redis-py is the standard client for Python.\""
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 5,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 188.2587890625,
+        "response": "To insert the key-value pairs sequentially into an initially empty AVL tree, I'll perform the insertion process step by step.\n\n1. Insert (20:O):\n   - Perform a lookup: The key 20 is not in the tree.\n   - Add a new node in the leftmost leaf position.\n   - Update the heights of the nodes.\n\n   The tree becomes:\n    20: O\n      |\n\n   Imbalance case: None\n\n2. Insert (40:S):\n   - Perform a lookup: The key 40 is not in the tree.\n   - Add a new node in the leftmost leaf position.\n   - Update the heights of the nodes.\n\n   The tree becomes:\n    20: O\n      |\n     40: S\n\n   Imbalance case: None\n\n3. Insert (60:T):\n   - Perform a lookup: The key 60 is not in the tree.\n   - Add a new node in the leftmost leaf position.\n   - Update the heights of the nodes.\n\n   The tree becomes:\n    20: O\n      |\n     40: S\n       |\n      60: T\n\n   Imbalance case: RR (right-heavy)\n\n4. Insert (80:R):\n   - Perform a lookup: The key 80 is not in the tree.\n   - Add a new node in the leftmost leaf position.\n   - Update the heights of the nodes.\n\n   The tree becomes:\n    20: O\n      |\n     40: S\n       |\n      60: T\n       |\n\n   Imbalance case: RR (right-heavy)\n\n5. Insert (70:E):\n   - Perform a lookup: The key 70 is not in the tree.\n   - Add a new node in the leftmost leaf position.\n   - Update the heights of the nodes.\n\n   To maintain balance, we perform an LR rotation.\n\n   The tree becomes:\n    40: S\n      |\n     20: O\n       |\\\n        60: T, 70: E\n\nThe final AVL tree after inserting all key-value pairs is:\n\n    40: S\n      |\n     20: O\n       | \\\n        60: T\n                70: E"
+    },
+    {
+        "embedder": "Instructor",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 5,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 187.673828125,
+        "response": "The code snippet provided in the text material includes pseudocode for an insertion algorithm of a B+ tree. Specifically, it is implemented using a recursive function that checks if the current leaf node of the root node already contains the given key-value pair or not. If the current leaf node does not contain the pair, then the function recursively inserts the pair into the internal nodes. \n\nThe pseudocode snippet illustrates the insertion process at different levels of the tree: (1) adding a key-value pair to an empty B+ tree, (2) inserting a key-value pair in an empty B+ tree with a leaf node, and (3) inserting a key-value pair in a non-empty B+ tree with a leaf node. \n\nThe function returns the updated root node of the B+ tree after the insertion process is complete. The function also keeps track of the depth of the B+ tree by incrementing it at each recursive call to maintain correctness for later comparison operations."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 1,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 193.8876953125,
+        "response": "Here is the MongoDB query based on the provided context:\n\ndb.movies.find({ \"year\": { \"$gt\": 2010, \"$lt\": 2015 }, \"genres\": { \"$eq\": \"Suspense\" } }, { \"title\": 1, \"_id\": 0 })\n\nThis query will return all documents from the movies collection where the year is between 2010 and 2015 (inclusive), and the genre is Suspense. The result will be ordered by title in ascending order, but since we're only selecting the title field, the default ordering won't be an issue.\n\nNote: Since there's no group or projection stage specified, it would return the entire matching documents with the title and id fields included"
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 1,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 168.9453125,
+        "response": "To return the titles of all movie titles from the suspense genre releaced after 2010 and before 2015, use the following Mongo query:\n\n```\nmflixdb.movie.find(\n    { \"year\": {\"$gt\": 2010}, \"genres\": {\"$elemMatch\": {\"name\": \"Suspense\"}} },\n    { title: 1, _id: 0 }\n).sort(\"_id\", -1)\n```\n\nThis query will return the titles of all movie titles from the suspense genre releaced after 2010 and before 2015 in descending order. The `filter` method is used to select only movie titles that match the given search criteria (`\"year\": {\"$gt\": 2010}, \"genres\": {\"$elemMatch\": {\"name\": \"Suspense\"}}`) and the `$elemMatch` operator ensures that only movies with the specified genre are returned. The `sort` method is used to sort the results in descending order based on `_id`."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 2,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 171.095703125,
+        "response": "A B+ Tree is better than an AVL Tree when indexing a large dataset because it is optimized for disk-based storage, reducing the number of disk accesses due to its higher branching factor. Unlike an AVL Tree, which maintains strict balance but has higher depth, a B+ Tree stores all keys in leaf nodes, allowing for efficient range queries and faster retrieval from disk."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 2,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 171.6298828125,
+        "response": "Based on the context provided, the answer to the question \"Why is a B+ Tree better than an AVL tree when indexing a large dataset?\" is that a B+ Tree stores all keys in leaf nodes, allowing for efficient range queries and faster retrieval from disk. This helps to minimize disk I/O required during seaward searcheis by keeping related records on the same disk block. In contrast, an AVL tree, while more space-efficient, has higher depth due to strict balance, requiring more disk blocks to be accessed for a given operation. Therefore, in large datasets, B+ Trees are recommended as they offer better performance and reduced disk I/O requirements compared to AVL trees."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 3,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 166.693359375,
+        "response": "To determine the imbalance case that occurs when adding node 23, we need to analyze the process of insertion.\n\nFrom the provided context, we know that after inserting 89:N, the tree became imbalanced at 60:T and was found to be a case RR. After inserting 70:E, the tree became imbalanced at 40:S and was found to be a case RL.\n\nWhen adding node 23, node 25 now has a balance factor of +2 (Left-heavy), and node 20 has a right child (23), creating an LR (Left-Right) imbalance.\n\nThe correct answer is LR."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 3,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 31.25,
+        "context_retrieval_memory": 166.1123046875,
+        "response": "The imbalance case is created when inserting 23 into the AVL Tree below. The tree becomes imbalanced at node 20, with a balance factor of +2 (Left-heavy). To correct this imbalance, perform a Left Rotation on node 20 and a Right Rotation on node 25."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 4,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 157.6669921875,
+        "response": "I don't know.\n\nHowever, based on general knowledge, I can tell you that the first version of Redis (version 0.1) was released in January 2005 by Salvatore Sorrentino, also known as \"sori\"."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 4,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 156.8837890625,
+        "response": "The context provided in the passage does not provide information about when Redis originally released, as it focuses on its use in Python. The specific context for the use of Redis in Python is mentioned in the passage's \"From 06 - Redis + Python.\""
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 5,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 62.5,
+        "context_retrieval_memory": 176.1591796875,
+        "response": "To insert the key:value pairs sequentially into an initially empty AVL tree, we will perform the following steps:\n\n1. Start with an empty AVL tree.\n2. Insert each key:value pair from the given list, starting with (20:O).\n\n   - The root node's height is 0.\n   - We start by inserting (20:O).\n   - Since the key 20 does not exist in the tree and we're at the root, we create a new node with value O as the root. Height of the current node is 1.\n\n3. Inserting (40:S):\n\n   - The key 40 exists in the tree now.\n   - We perform a lookup for the key 40 and find that it already exists.\n   - Since keys in an AVL tree must be unique, we don't create any new nodes this time. Tree remains the same.\n\n4. Inserting (60:T):\n\n   - The key 60 does not exist in the tree yet.\n   - We perform a lookup for the key 60 and find that it does not exist.\n   - Since we're at the node with key O, we need to add a new left child node with value T.\n\n    * Root: O\n      * Left child of root: T (Height = 1)\n        * Root: O\n          * Left child of O: T\n\n5. Inserting (80:R):\n\n   - The key 80 does not exist in the tree yet.\n   - We perform a lookup for the key 80 and find that it does not exist.\n   - Since we're at the node with value T, we need to add a new right child node with value R.\n\n    * Root: O\n      * Left child of root: T (Height = 1)\n        * Root: O\n          * Left child of O: T\n            * Right child of T: R\n\n6. Inserting (89:N):\n\n   - The key 89 does not exist in the tree yet.\n   - We perform a lookup for the key 89 and find that it does not exist.\n   - Since we're at the node with value R, we need to add a new right child node with value N.\n\n    * Root: O\n      * Left child of root: T (Height = 1)\n        * Root: O\n          * Left child of O: T\n            * Right child of T: R\n              * Right child of R: N\n\n7. Inserting (70:E):\n\n   - The key 70 does not exist in the tree yet.\n   - We perform a lookup for the key 70 and find that it does not exist.\n   - Since we're at the node with value N, we need to add a new right child node with value E.\n\n    * Root: O\n      * Left child of root: T (Height = 1)\n        * Root: O\n          * Left child of O: T\n            * Right child of T: R\n              * Right child of R: N\n                * Right child of N: E\n\nThe final AVL tree after inserting all the key:value pairs is:\n\n       O \n     /   \\\n   T      R\n /        |\nN          E\n\n\nNote that at this point, we should perform the balance operation to maintain the AVL property. However, since you requested only the final state of the tree before the balance operation, I provided it as above.\n\nPlease note: To answer your full question about inserting (70:E) and (32:E), you'd need me to describe how to insert these values after having a balanced tree with all previous values inserted, maintaining AVL property."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 5,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 173.7255859375,
+        "response": "Yes, the context provided includes the following context for answering \"You are a helpful AI assistant.\"\n\nFrom 4300 - 25s-HW02 - Maaseide.pdf (page 1, chunk Question 1: Each of the following key-value pairs in the list below represents a document (the integer) and a word in that document (the letter) from your P01 data set. Insert the key:value pairs sequentially from (20:O) to (32:E) into an initially empty AVL tree. Use the integer as the key to insert. Note: this will not produce an inverted index like you're creating for the practical. You only need to provide the balanced state of the tree after inserting (70:E), (32:E). [(20:O), (40:S), (60:T), (80:R), (89:N), (70:E), (30:T), (10:N), (33:A), (31:H), (24:R), (32:E)] After inserting (70:E): After Inserting (32:E): Imbalances: - When inserting (60:T), the tree became imbalanced at (20:O) and was found to be a case RR - When inserting (89:N), the tree became imbalanced at (60:T) and was found to be a case RR - When inserting (70:E), the tree became imbalanced at (40:S) and was found to be a case RL - When inserting (30:T), the tree became imbalanced at (40:S) and was found to be a case RL - When inserting (31:H), the tree became imbalanced at (40:S) and was found to be a case LL - When inserting (32:E), the tree became imbalanced) with similarity 0.71"
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 1,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 162.6162109375,
+        "response": "To solve this problem, we can create a Mongo query like so:\n\n```javascript\ndb.movies.find({\n    \"year\": {\n        $gte: 2010,\n        $lte: 2015\n    },\n    \"genre\": \"Suspense\"\n})\n```\n\nThis query selects all documents from the `movies` collection where the `year` field is between 2010 and 2015 (inclusive) and the `genre` field is equal to \"Suspense\"."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 1,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 162.8095703125,
+        "response": "To get the titles of all movie titles releaced between 2010 and 2015 from the suspense genre, you can use the following MongoDB query:\n\n```javascript\ndb.collection.find( { \"year\": { \"$gte\": 2010, \"$lte\": 2016 } }, { \"_id\": 0, \"name\": 1, \"_id\": 0 })\n```\n\nThis will select all documents from the `movie` collection that were released in 2010 or later and belong to the suspense genre. The `$gte` and `$lte` operators are used with the `\"year\"` field of the document to filter out any documents that don't satisfy this criteria. The `_id` field is ignored and can be omitted from the query for efficiency."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 2,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 190.486328125,
+        "response": "Based on the provided context, I'd say that a B+ Tree is generally considered better than an AVL Tree for indexing a large dataset, especially in disk-based systems like file systems. Here's why:\n\n1. **Disk efficiency**: B+ Trees are designed to minimize the number of disk accesses required during search, insertion, and deletion operations. By storing frequently accessed data in the leaf nodes, B+ Trees reduce the number of disk I/Os, making them more efficient for large datasets.\n\n2. **Balancing**: AVL Trees are self-balancing, which helps maintain a balanced tree structure. However, this balancing process can lead to increased overhead and slower performance compared to B+ Trees.\n\n3. **Height**: B+ Trees have a much shallower height than AVL Trees, especially for large datasets. This is because the branching factor of B+ Trees is typically higher than that of AVL Trees, which means fewer disk accesses are required to reach a leaf node.\n\n4. **Node fullness**: B+ Trees ensure that every node (except possibly the root) is at least half full, whereas AVL Trees don't have this guarantee. This helps reduce overhead and improves performance.\n\n5. **Space efficiency**: B+ Trees use more space than AVL Trees due to their higher branching factor, but this comes at the cost of increased disk accesses.\n\nIn summary, while AVL Trees offer better guarantees on tree balance and can be useful in certain scenarios, B+ Trees are generally better suited for indexing large datasets due to their efficient disk access patterns, lower height, and improved space efficiency."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 2,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 190.2216796875,
+        "response": "A B+ Tree is a generalization of the AVL tree and is often used for indexing large datasets since it provides good search performance with high space efficiency. One reason why a B+ Tree performs better than an AVL tree is that a B+ Tree maintains a balance between height and branching factor, while an AVL tree does not. When searching for a record in an AVL tree, the tree is divided into two parts, and the left subtree (which contains smaller records) is searched, followed by the right subtree (which contains larger records). This means that the search time grows exponentially with the size of the dataset, whereas in a B+ Tree, the search time grows only linearly. Additionally, AVL trees are not as good at finding nodes in the middle of the tree, while B+ Trees can find nodes in the middle by maintaining balanced structures. Finally, an AVL tree may require more memory to store because it has more nodes than a B+ Tree, and therefore it is subjected to larger I/O operations due to slower access times. In summary, because of its excellent balance between height and branching factor, as well as its ability to maintain balanced structures and find nodes in the middle, a B+ Tree performs better for searching large datasets compared to an AVL tree."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 3,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 179.3671875,
+        "response": "To determine which imbalance case is created by inserting 23, we need to analyze the tree and the insertion process.\n\nInitially, the tree looks like this:\n\n     30\n    / \\\n   25  35\n   /  \\\n  20 \n\nWe are going to insert a new node with value 23. We will place it in the left subtree of the root node (30). Since we are inserting into the left child, this is an example of Case 2 LR.\n\nTo fix the imbalance created by insertion, two rotations need to be performed: \n1. A Left Rotation on the left child (node with value 25) will make it the new root.\n2. Then a Right Rotation on the current node (30), making it the right child of the newly formed left child.\n\nThis process should restore balance to the tree, as the difference in heights between the left and right subtrees will be restored to -1, 0 or 1."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 3,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 179.6044921875,
+        "response": "The context states that the AVL tree has two cases of unbalanced nodes after an insertion or deletion. The types of imbalances include LL (Left-Left) and RR (Right-Right) imbalances, where inserting a new node causes a left-rotation on one of its descendants, followed by a right rotation on the original root.\n\nTo fix this unbalanced case, the RiHixton rotation is performed using two rotations: 1. Let Y be the left child of X (the unbalanced node), and move it up to become the new root. 2. Make X the right child of Y.\n\nThe resulting tree is now balanced because the left and right subtree heights are restored."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 4,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 156.2451171875,
+        "response": "I don't know. The provided context does not mention the release date of Redis, but it mentions that \"Redis is the standard client for Python\" and provides a link to the Redis Company's GitHub repository."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 4,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 156.32421875,
+        "response": "The context provided in the passage does not directly answer the query about when Redis originally released, as it does not mention any specific date or time. However, based on the information presented in the text and similar contexts from other sources, it can be inferred that Redis was initially released in 2009."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 5,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 46.875,
+        "context_retrieval_memory": 191.201171875,
+        "response": "To solve this problem, we'll insert each key-value pair sequentially into the AVL tree. We'll also keep track of any imbalances that occur.\n\n1. Inserting (20:O):\n   - The root node is created with key 20 and value O.\n   - Imbalance case: None\n\n2. Inserting (40:S):\n   - Perform a lookup for key 40 in the tree. It doesn't exist, so we add a new node at this position.\n   - The left child of the root node (key 20) is updated to point to the new node with key 40 and value S.\n   - Imbalance case: RL\n\n3. Inserting (60:T):\n   - Perform a lookup for key 60 in the tree. It doesn't exist, so we add a new node at this position.\n   - The left child of the node with key 40 is updated to point to the new node with key 60 and value T.\n   - Imbalance case: LL\n\n4. Inserting (80:R):\n   - Perform a lookup for key 80 in the tree. It doesn't exist, so we add a new node at this position.\n   - The left child of the node with key 40 is updated to point to the new node with key 80 and value R.\n   - Imbalance case: RL\n\n5. Inserting (89:N):\n   - Perform a lookup for key 89 in the tree. It doesn't exist, so we add a new node at this position.\n   - The right child of the node with key 40 is updated to point to the new node with key 89 and value N.\n   - Imbalance case: RL\n\nThe final state of the AVL tree is:\n      20 (O)\n     / \\\n    40 (S) 80 (R)\n     \\     /\n      60 (T) 89 (N)\n\nNote that we've inserted all key-value pairs sequentially, and there are imbalances at each step."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 5,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 190.517578125,
+        "response": "According to the given text, inserting a key into an AVL tree starts out by performing a lookup. If the key is found in the data, it is inserted successfully, and if not, the search proceeds to the next node. The implementation of this insertion process uses the LL (Left-Leaf) rotation algorithm to balance the level to which the data needs to be searched. Once the appropriate branch is taken, the second branch is used to promote or lower the middlle key to its parent node if necessary. This process is repeated for each level in the tree until all nodes are balanced, resulting in a more efficient search algorithm. Additionally, the B+ Tree implementation discussed below is flexible and can be easily updated based on the needs of the system."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 1,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 170.630859375,
+        "response": "Here's how you could write this query:\n\ndb.movies.find({ \"year\": { \"$gte\": 2010, \"$lte\": 2015 }, \"genres\": \"Suspense\" }, { \"title\": 1 })\n\nIf I'm confident about my answer, that's the solution; otherwise, I don't know."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 1,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 171.5205078125,
+        "response": "Mongo Query:\n\n    Mongo query to retrieve the titles of all movie titles relaesed between 2010 and 2015 in the suspense genre, based on the data set available as per the context above. Here's how to run it using MongoDB shell:\n\n    ```\n    db.movie_db.aggregate([\n        {\n            $match: {\n                \"year\": {\n                    \"$gt\": 2010,\n                    \"$lt\": 2015\n                },\n                \"genres\": \"Suspense\"\n            }\n        },\n        {\n            $group: {\n                \"_id\": null,\n                \"movie_title\": {\"$first\": \"$title\"},\n                \"total_votes\": {\"$sum\": \"$imdb.vote\"}\n            }\n        },\n        {\n            $sort: {\n                \"total_votes\": -1\n            }\n        },\n        {\n            $project: {\n                \"movie_title\": 1,\n                \"_id\": 0\n            }\n        }\n    ])\n    ```\n\nThis Mongo query returns the list of movie titles with their total votes for each year between 2010 and 2015 in the suspense genre."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 2,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 62.5,
+        "context_retrieval_memory": 206.7353515625,
+        "response": "A B+ tree is generally considered better than an AVL tree for indexing a large dataset because of its efficient storage and retrieval capabilities. Here are some reasons why:\n\n1. **Storage efficiency**: B+ trees store data in a way that allows for efficient storage and retrieval. They use a combination of internal nodes and leaf nodes to store the data, which reduces the overhead of storing the actual data values.\n2. **Faster search and insertion times**: B+ trees have an average time complexity of O(log n) for search, insertion, and deletion operations, making them suitable for large datasets. AVL trees, on the other hand, have a worst-case time complexity of O(n) for certain types of operations.\n3. **Space efficiency**: B+ trees can store more data in the same amount of space as AVL trees because they use a disk-based index that allows for efficient storage and retrieval of the data.\n4. **Scalability**: B+ trees are designed to scale well with large datasets, making them a good choice for indexing large datasets.\n5. **Efficient updates**: B+ trees can handle concurrent updates more efficiently than AVL trees, which makes them suitable for applications where multiple users need to update the index simultaneously.\n\nOverall, while AVL trees have some advantages, such as guaranteeing a balanced tree, B+ trees are generally better suited for indexing large datasets due to their efficient storage and retrieval capabilities."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 2,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 206.349609375,
+        "response": "A B+ Tree is a more efficient way to index large datasets compared to an AVL tree because it has fewer nodes, which reduces the number of comparisons necessary for each operation. This is because AVL trees can have multiple pointers pointing to the same node and are vulnerable to imbalances caused by inserting or removing keys. On the other hand, a B+ Tree has only one pointer per node, which simplifies the search process significantly. This results in better performance when dealing with large datasets, as it reduces the time needed for each operation while minimizing the number of comparisons needed. In summary, A B+ Tree is a more efficient way to index large datasets compared to an AVL tree because it has fewer nodes and one pointer per node simplifies the search process significantly."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 3,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 31.25,
+        "context_retrieval_memory": 180.501953125,
+        "response": "To determine the imbalance case created by inserting 23, let's analyze the tree and perform the insertion.\n\nThe given tree is:\n\n     30\n    / \\\n   25  35\n      / \\\n     20 \n\nWhen we insert 23, the tree becomes:\n\n     30\n    / \\ \n   25 35 \n      / \\\n     20 23\n\nNow, let's calculate the balance factor of each node in the tree.\n\nThe balance factor of a node is calculated as: Balance Factor = Height of Left Subtree - Height of Right Subtree\n\nFor node 30:\nHeight of left subtree (25) = 1\nHeight of right subtree (20, 23) = 2\n\nBalance factor of 30 = 1 - 2 = -1\n\nFor node 25:\nHeight of left subtree (none) = 0\nHeight of right subtree (20) = 1\n\nBalance factor of 25 = 0 - 1 = -1\n\nFor node 35:\nHeight of left subtree (none) = 0\nHeight of right subtree (23) = 1\n\nBalance factor of 35 = 0 - 1 = -1\n\nFor node 20:\nHeight of left subtree (none) = 0\nHeight of right subtree (none) = 0\n\nBalance factor of 20 = 0 - 0 = 0\n\nFor node 23:\nHeight of left subtree (none) = 0\nHeight of right subtree (none) = 0\n\nBalance factor of 23 = 0 - 0 = 0\n\nNow, let's analyze the balance factors to determine the imbalance case created by inserting 23.\n\nAll nodes have a balance factor of either -1, 0, or 1, which means none of them are unbalanced according to this criteria. However, if we look at the subtree rooted at node 25 and consider its left child (which is not present), we can see that there's a potential imbalance.\n\nBut looking closer at our tree with 23 inserted, no imbalance case is created."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 3,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 180.771484375,
+        "response": "The context provided in the given text states that an AVL tree is a type of self-balancing binary search tree where the height of each node's left and right subtrees differ by at most 1. This ensure the O(log n) time complexity for searching, inserting, and deleting operations. A balanced AVL tree maintains a balance factor, which is calculated as: Balance Factor=Height of Left Subtree-Height of Right Subtree. If inserting or deleting a node causes the balance factor to become less than -1 or greater than 1 for the tree to be considered unbalanced, then a rotation is required to restore balance. The types of imbalances in an AVL tree are:\n\n1. Left-Left (LL) Case: Insertion in the left subtree of the left child of a node causes imbalance, because the balance factor becomes greater than 1 at some ancestor node. Example: 2. Riught-Right (RR) Case: Insertion in the right subtree of the right child of a node causes imbalance, because the balance factor becomes less than -1 at some ancestor node. Example: 3. Left-Right (LR) Case: Insertion in the right subtree of the left child of a node causes imbalance, because the balance factor becomes greater than 1 at some ancestor node. Rotations are required to restore balance, with steps for each imbalance case:\n\n4. Riught-Left (RL) Case: Single left rotation is performed on the unbalanced node to fix LL imbalance. Imbalance case:\n5. Left-Right (LR) Case: Single right rotation is performed on the unbalanced node to fix RR imbalance, with the resulting balance factor becoming less than -1 or greater than 1. 6. Riught Rotation: Perform a right rotation on the unbalanced node with similarity 0.81. This restores balance for LL imbalance cases and is a RL case with an RR case below."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 4,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 156.267578125,
+        "response": "I don't know. The provided context does not mention when Redis was originally released, and I couldn't find any information in the given documents that provides a specific release date for Redis. If you could provide more context or information about Redis' release date, I would be happy to try and help further."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 4,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 156.287109375,
+        "response": "According to the context, it is not mentioned in the passage whether Redis originally released or when Redis first became available as a popular tool for implementing key-value stores. The similarity between the similarity values suggests that the answer is \"currently\" (2021)."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 5,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 31.25,
+        "context_retrieval_memory": 205.814453125,
+        "response": "Here is the step-by-step solution to the query:\n\n**Insertion Steps:**\n\n1. Insert (20:O) into an initially empty AVL tree:\n\t* Root node created with key 20 and value O.\n\t* No left or right child nodes are needed, so no additional nodes are inserted at this time.\n2. Insert (40:S) into the AVL tree:\n\t* Current root node has a value of O, but we're inserting S, which should be in a different position to maintain balance.\n\t* Create new right child node with key 40 and value S.\n\t* The current root node becomes the left child of its own node (because there's only one level below it).\n3. Insert (60:T) into the AVL tree:\n\t* Current root node has value O, but we're inserting T, which should be in a different position to maintain balance.\n\t* Create new right child node with key 60 and value T.\n\t* The current root node becomes the left child of its own node.\n4. Insert (80:R) into the AVL tree:\n\t* Current root node has value O, but we're inserting R, which should be in a different position to maintain balance.\n\t* Create new right child node with key 80 and value R.\n\t* The current root node becomes the left child of its own node.\n5. Insert (89:N) into the AVL tree:\n\t* Current root node has value O, but we're inserting N, which should be in a different position to maintain balance.\n\t* Create new right child node with key 89 and value N.\n\t* The current root node becomes the left child of its own node.\n6. Insert (70:E) into the AVL tree:\n\t* Current root node has value O, but we're inserting E, which should be in a different position to maintain balance.\n\t* Create new right child node with key 70 and value E.\n\t* The current root node becomes the left child of its own node.\n\n**Final AVL Tree Structure:**\n\nAfter all the insertions are complete, the final AVL tree structure is:\n\n       (20:O)\n     /   \\\n  (40:S) (60:T)\n      /    \\\n  (70:E)(80:R)\n\nNote that this represents a balanced AVL tree with the given key:value pairs."
+    },
+    {
+        "embedder": "MiniLM",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 5,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 204.2431640625,
+        "response": "The provided code snippet in the given material shows how to insert key-value pairs sequentially into an initially empty AVL tree. The `BNode` class is implemented as a leaf node with three keys and four pointers. To implement internal nodes, we store key/pointer pairs, and each internal node should be assumed to hold in B+ B\u2217 B+ B+ m. This ensures that internal nodes are stored in the appropriate order for efficient search and update operations."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 1,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 167.6640625,
+        "response": "Here is the MongoDB query to get the titles of all movies released between 2010 and 2015 from the suspense genre:\n\n```bash\ndb.movies.find({\n    \"year\": {\"$gte\": 2010, \"$lte\": 2015},\n    \"genres\": \"Suspense\"\n}, {\n    \"title\": 1,\n    \"_id\": 0\n})\n```\n\nThis query first filters movies released between 2010 and 2015 (inclusive) using the `$gte` and `$lte` operators. It then selects only those documents where the genre is \"Suspense\". The `title` field is included in the result set, while the `_id` field is excluded to avoid displaying unnecessary information."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 1,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 166.923828125,
+        "response": "Here's a MongoDB query that fulfills the given context:\n\n```\nmatch = {\"$match\": {\"year\": {\"$gte\": 2010, \"$lte\": 2015}}}\ngroup = {\"$group\": {\"_id\": {\"release year\": \"$year\"}, \"count\": {\"$sum\": \"$imdb.vote\"}, \"avgVotes\": {\"$avg\": \"$imdb.vote\"} }}\nsort = {\"$sort\" : [[\"relxase year\", -1]]}\nproject = {\"_id\": 0, \"relxase year\": 1, \"Avg Votes\": 2}\naggregate(mflixdb.movieS) | project(user|assistant)\n```\n\nThis query returns the titles of all movie titles releaced between 2010 and 2015 in ascending order by `relxase year`, and each movie's average number of imdb votes per year, sorted by `relxase year`. The output will look something like:\n\n```\n{ \"title\": \"The Revenant\", \"Avg Votes\": 2.0 }\n{ \"title\": \"Mad Max: Fury Road\", \"Avg Votes\": 3.0 }\n{ \"title\": \"Jurassic World\", \"Avg Votes\": 3.5 }\n```"
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 2,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 46.875,
+        "context_retrieval_memory": 164.5205078125,
+        "response": "A B+ Tree is better than an AVL Tree when indexing a large dataset because it is optimized for disk-based storage, reducing the number of disk accesses due to its higher branching factor. Unlike an AVL Tree, which maintains strict balance but has higher depth, a B+ Tree stores all keys in leaf nodes, allowing for efficient range queries and faster retrieval from disk."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 2,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 164.8671875,
+        "response": "The context provided answers the query by highlighting key points regarding the use of B+ trees, which are optimized for disk-based storage and have higher branching factors compared to AVL trees. Specifically, B+ trees store all keys in leaf nodes, allowing for efficient range queries and faster retrieval from disk. The context also provides an overview of the concept of building a B+ tree, with visualization tools available to further explain how they work."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 3,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 168.7685546875,
+        "response": "To determine the imbalance case created by inserting 23, let's first calculate the balance factor before and after the insertion.\n\nThe current tree is:\n     30\n    / \\\n   25  35\n      /\n     20\n\nNow, let's insert 23 into the left subtree of 25 (left child).\n\nAfter insertion, the updated tree becomes:\n     30\n    / \\\n   23 25\n          \\\n           20\n            \\ \n              35\n               \\\n                35\n\n\nSince there are two nodes below 25 and one node above it, the height of the left subtree is 3 and the height of the right subtree is 2.\n\nThe balance factor before insertion: Balance Factor = Height of Left Subtree - Height of Right Subtree = 3 - 2 = 1\n\n\nWith this information, we can see that inserting 23 creates a case LL imbalance."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 3,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 168.4609375,
+        "response": "The query asks about the imbalance case when inserting 23 into an AVL tree below. In a case LL, as the imbalance occurs on the left subtree and becomes worse with the addition of new depth (in Case 1). This leads to an LL imbalance case with the children of rotated nodes also becoming less balanced. The diagram does not show these alterations in the tree, but instead mirrors them."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 4,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 160.2998046875,
+        "response": "Redis was initially released in 2009."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 4,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 160.0673828125,
+        "response": "The context provided does not contain any information about when Redis was initially released. The most similar query found is \"When was Redis originally released in DS/ML 15 Source: https://madewithml.com/courses/mlops/feature-store/\" with similarity score of 0.99."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 5,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 172.404296875,
+        "response": "To insert the key:value pairs sequentially into an initially empty AVL tree, we need to perform a lookup and then add a new node in the appropriate leaf position.\n\nLet's start with the first pair, (20:O).\n\n1. Perform a lookup: Since 20 is not in the tree, we find its position.\n2. Add a new node: Create a new leaf node at position 20 with value O.\n   - Height of left subtree: 0\n   - Height of right subtree: 0\n\nThe tree now looks like this:\n```\n       20 (O)\n```\n\nNext pair is (40:S).\n\n1. Perform a lookup: Find the node at position 20. Since 40 is greater than O, we move to the right subtree.\n2. Add a new node: Create a new internal node at position 20 with value S as its key.\n   - Left child: Node at position 21\n   - Right child: Node at position 22\n   - Height of left subtree: 1\n   - Height of right subtree: 0\n   - Key in the node: S\n\nThe tree now looks like this:\n```\n       20 (O)\n     /    \\\n     21 (S) \n       |     \n       22  \n```\n\nNext pair is (60:T).\n\n1. Perform a lookup: Find the node at position 20. Since 60 is greater than O and S, we move to the right subtree.\n2. Add a new node: Create a new internal node at position 21 with value T as its key.\n   - Left child: Node at position 22\n   - Right child: New leaf node at position 23 with value E\n   - Height of left subtree: 1\n   - Height of right subtree: 0\n   - Key in the node: S\n\nThe tree now looks like this:\n```\n       20 (O)\n     /    \\\n     21 (S) \n       |     \n       22  \n        /\n       23 (E) \n```\n\nNext pair is (80:R).\n\n1. Perform a lookup: Find the node at position 20. Since 80 is greater than O, S, and E, we move to the right subtree.\n2. Add a new node: Create a new internal node at position 22 with value R as its key.\n   - Left child: Node at position 23\n   - Right child: New leaf node at position 24 with value N\n   - Height of left subtree: 1\n   - Height of right subtree: 0\n   - Key in the node: E\n\nThe tree now looks like this:\n```\n       20 (O)\n     /    \\\n     21 (S) \n       |     \n       22  \n        /\n       23 (E) \n       |\n       24 (N)\n```\n\nNext pair is (89:N).\n\n1. Perform a lookup: Find the node at position 21. Since 89 is greater than S, we move to the right subtree.\n2. Add a new node: Create a new internal node at position 23 with value N as its key.\n   - Left child: New leaf node at position 24\n   - Right child: Node at position 25\n   - Height of left subtree: 1\n   - Height of right subtree: 0\n   - Key in the node: E\n\nThe tree now looks like this:\n```\n       20 (O)\n     /    \\\n     21 (S) \n       |     \n       22  \n        /\n       23 (E) \n       |\n       24(N)\n             |\n             25\n```\n\nNext pair is (70:E).\n\n1. Perform a lookup: Find the node at position 23. Since 70 is greater than E, we move to the right subtree.\n2. Add a new node: Create a new internal node at position 24 with value E as its key.\n   - Left child: New leaf node at position 25\n   - Right child: Node at position 26\n   - Height of left subtree: 1\n   - Height of right subtree: 0\n   - Key in the node: N\n\nThe tree now looks like this:\n```\n       20 (O)\n     /    \\\n     21 (S) \n       |     \n       22  \n        /\n       23 (E) \n       |\n       24(N)\n             |\n             25\n       /    \n      26  \n```\n\nNext pair is not provided. We'll stop here.\n\nThe final AVL tree after inserting the key:value pairs sequentially from (20:O) to (70:E) is:\n```\n       20 (O)\n     /    \\\n     21 (S) \n       |     \n       22  \n        /\n       23 (E) \n       |\n       24(N)\n             |\n             25\n```"
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 200,
+        "overlap": 50,
+        "question_number": 5,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 169.8388671875,
+        "response": "The context provided contains the details of inserting a key (i.e., 35) into an AVL tree with imbalances. Insertion of the key will introduce a node with height -1, which is not compatible with the AVL property and results in the balanced state being found to be RR or LR depending on the order of insertion (i.e., whether inserting at (20:O) or (40:S)). \n\nAfter inserting (70:E), imbalances occur at (60:T) and are subsequently found to be a case RR, which is correct. After inserting (32:E), the tree becomes balanced again as it was before insertion of (35)."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 1,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 168.7880859375,
+        "response": "Here is the MongoDB query to retrieve the titles of all movies released between 2010 and 2015 from the suspense genre:\n\n```bash\ndb.movies.find({\"year\": {\"$gt\": 2010}, \"year\": {\"$lte\": 2015}, \"genres\": \"Suspense\"}, {\"title\": 1, \"_id\": 0})\n```\n\nThis query filters for movies released between 2010 and 2015 (`$gt` and `$lte` operators) that have a genre of Suspense. It returns the `title` field of each matching document."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 1,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 168.00390625,
+        "response": "To retrieve the titles of all movie titles rel\u00e6ased between 2010 and 2015 from the suspense genre, we can use a Mongo query that filters on the \"year\" field using the \"gt\" operator (greater than) and the \"awards.win\" field using the $gtE operator (greater than or equal to).\nHere's an example:\n```\ndb.movie.aggregate([\n  {\n    \"$match\": {\n      \"year\": {\n        \"$gte\": 2010,\n        \"$lt\": 2015\n      },\n      \"$or\": [\n        {\n          \"awards.win\": {\n            \"$gt\": 5\n          }\n        },\n        {\n          \"genres\": {\n            \"$eq\": \"Drama\"\n          }\n        }\n      ]\n    }\n  },\n  {\n    \"$group\": {\n      \"_id\": \"$year\",\n      \"movie_count\": {\n        \"$sum\": 1\n      },\n      \"title\": {\n        \"$first\": \"$name\"\n      }\n    },\n    \"$sort\": {\n      \"title\": 1,\n      \"year\": 1\n    }\n  },\n  {\n    \"$project\": {\n      \"_id\": 0,\n      \"movie_count\": 1,\n      \"name\": 1,\n      \"title\": 1\n    },\n    \"$sort\": {\n      \"title\": 1,\n      \"year\": 1\n    }\n  }\n])\n```\nThis query will return all the movie titles rel\u00e6ased between 2010 and 2015 from the suspense genre that have won at least 5 awards or have a Drama genre."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 2,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 183.4453125,
+        "response": "A B+ Tree is better than an AVL Tree when indexing a large dataset because it is optimized for disk-based storage, reducing the number of disk accesses due to its higher branching factor. Unlike an AVL Tree, which maintains strict balance but has higher depth, a B+ Tree stores all keys in leaf nodes, allowing for efficient range queries and faster retrieval from disk."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 2,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 183.7841796875,
+        "response": "The answer to the query is that A VL Tree (Avl tree) is optimized for disk-based storage, reducing the number of disk accesses due to its higher branching factor. An unsorted, non-AVL tree such as a B+ Tree requires many more disk reads and writes compared to an AVL tree. A B+ Tree is better suited for larger datasets since it has fewer disk accesses than an AVL Tree. However, the space requirements of a B+ Tree can be quite high due to its high branching factor, requiring large amounts of memory to store all the nodes and their contents. The base of the log in this case is the number of records stored in each node of the tree, which in a B+ Tree with height 5 could result in several hundred or more nodes."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 3,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 93.75,
+        "context_retrieval_memory": 177.1962890625,
+        "response": "To determine the imbalance case created by inserting 23, we need to calculate the balance factor of the root node (30) before and after insertion.\n\nBefore insertion:\nThe left subtree of the root node is rooted at 25, with a height of 1.\nThe right subtree of the root node is rooted at 35, with a height of 2.\n\nBalance factor = Height of Left Subtree - Height of Right Subtree\n= 1 - 2\n= -1\n\nAfter insertion:\nWe insert 23 into the left child of the root node (25). This means the left subtree of the root node becomes more unbalanced.\n\nNew balance factor = Height of Left Subtree - Height of Right Subtree\n= 2 - 1\n= 1\n\nSince the new balance factor is greater than 1, we have a LL imbalance case."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 3,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 31.25,
+        "context_retrieval_memory": 177.328125,
+        "response": "The imbalance case created when inserting 23 into the AVL tree below is LL, as it leads to a balance factor change in one of its nodes. This can be seen by comparing the unbalanced state of the tree before and after inserting 23:\n\nBefore insertion:\n\u25cf\u200b Balance Factor: -1 (root: 40 -> 5)\n\u25cf\u200b Balance Factor: -1 (node: 30, left child: 35, right child: 20)\n\nAfter inserting 23:\n\u25cf\u200b Balance Factor: -1 (root: 40 -> 5)\n\u25cf\u200b Balance Factor: -2 (node: 30, left child: 5, right child: 35)\n\nTherefore, the balanced state of the tree after inserting 23 is:\n\nAfter insertion:\n\u25cf\u200b Balance Factor: -1 (root: 40 -> 5)\n\u25cf\u200b Balance Factor: -2 (node: 30, left child: 5, right child: 35)\n\nAs the balance factor becomes less than -1 at some ancestor node, a RiGiT rotation is needed to fix the imbalance. This is performed by performing an LR rotation on the unbalanced node, which restores the original balance of the tree."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 4,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 156.015625,
+        "response": "I don't know. The provided text snippet doesn't contain information about the release date of Redis. However, I can tell you that Redis is a relatively old project, and its origins are well-documented. According to various sources, including Wikipedia and the official Redis website, Redis was initially released in 2005 by Salvatore Soranzo."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 4,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 31.25,
+        "context_retrieval_memory": 155.8271484375,
+        "response": "The context provided does not mention the date of Redis's release. It only refers to Redis being \"released\" or having \"releases\". Therefore, the answer is not accurate and should be clarified with a specific reference to when Redis was originally released."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 5,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 179.1904296875,
+        "response": "To answer this question, I will follow the steps outlined in the context:\n\n1. Perform a lookup for each key-value pair to determine if it already exists in the tree.\n2. If the key-value pair is not found, add a new node with the given key and value.\n3. After adding the new node, compare the heights of its left and right subtrees to determine if an imbalance has been introduced.\n4. If the difference in heights between the left and right subtrees is greater than 1, perform a rotation to balance the tree.\n\nHere are the insertions with their corresponding results:\n\n* When inserting (20:O), the tree became imbalanced at (40:S) and was found to be a case LL.\n* When inserting (40:S), the tree became imbalanced at (60:T) and was found to be a case RR.\n* When inserting (70:E), the tree became imbalanced at (40:S) and was found to be a case RL.\n\nThe final AVL tree after inserting all key-value pairs sequentially is not provided in the context, so I cannot give you that information. However, the above list includes the insertions with their corresponding imbalance results."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 500,
+        "overlap": 100,
+        "question_number": 5,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 46.875,
+        "context_retrieval_memory": 178.2646484375,
+        "response": "The context provides a brief overview of the TreeSearch algorithm and its use case. The key-value pairs in the list are inserted into an initially empty AVL tree, which is then inverted using the given context. Inserting (70:E) produces imbalances at (20:O), (40:S), (60:T), and (80:R), and causing these nodes to need to split and move values upward to create new nodes. The remaining values are copied down into the newly created nodes, while the smallest value from each node is moved up to the parent node. Once the tree becomes balanced, it can be inverted back using the given context, resulting in the expected list of insertions causing imbalances and their corresponding node locations."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 1,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 168.7109375,
+        "response": "Here is the MongoDB query to get the titles of all movies released between 2010 and 2015 in the suspense genre:\n\n```javascript\ndb.movies.find({\n    \"$and\": [\n        { \"year\": { \"$gte\": 2010 } },\n        { \"year\": { \"$lte\": 2015 } },\n        { \"genres\": \"Suspense\" }\n    ]\n}, {\n    \"title\": 1,\n    \"_id\": 0\n})\n```\n\nThis query will return a cursor that iterates over all movies released between 2010 and 2015, filtered by the suspense genre. The `$and` operator is used to combine multiple conditions into one condition, ensuring that only movies that meet both criteria are returned."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 1,
+        "llm_model": "tinyllama:latest",
+        "context_retrieval_time_ms": 0.0,
+        "context_retrieval_memory": 169.02734375,
+        "response": "Mongo query to retrieve the titles of all movie titles releaced between 2010 and 2015 in the \"suspense\" genre from the \"movie\" collection using the top-level attribute \"title\":\n\n```\ndb.movie.find({\"year\": {\"$gt\": 2010}, \"tomatoes.viewer.rating\": {\"$gte\": 3}}, {title: 1, tomatoes.viewer.rating: 1, \"_id\": 0}).sort(\"tomatoes.viewer.rating\", -1)\n```\n\nExplanation:\n\n- `db.movie` is the \"movie\" collection from MongoDB's native schema\n- `find()` method retrieves all documents in this collection based on specified query conditions (here, filtering by year and suspense genre)\n- `{\"year\": {\"$gt\": 2010}, \"tomatoes.viewer.rating\": {\"$gte\": 3}}` is a top-level filter that only returns documents with an \"year\" field greater than or equal to 2010 and whose \"tomatoes.viewer.rating\" field has a value greater than or equal to 3 (both conditions are ANDed together)\n- `{title: 1, tomatoes.viewer.rating: 1}` is a subquery to retrieve the top-level attribute of each matching document (here, \"title\")\n- `sort()` method sorts the matching documents based on their value for this attribute (in this case, \"tomatoes.viewer.rating\", which has a $gt operator), with \"-1\" indicating descending order\n- Finally, the query is wrapped in an aggregate() method to execute it as a Mongo database query and return all matching documents in the collection."
+    },
+    {
+        "embedder": "MPNet",
+        "chunk_size": 1000,
+        "overlap": 200,
+        "question_number": 2,
+        "llm_model": "llama3.2:latest",
+        "context_retrieval_time_ms": 15.625,
+        "context_retrieval_memory": 185.4375,
+        "response": "A B+ Tree is better than an AVL tree when indexing a large dataset because it is optimized for disk-based storage, reducing the number of disk accesses due to its higher branching factor. Unlike an AVL Tree, which maintains strict balance but has higher depth, a B+ Tree stores all keys in leaf nodes, allowing for efficient range queries and faster retrieval from disk."
+    }
+]

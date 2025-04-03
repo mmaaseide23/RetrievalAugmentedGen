@@ -124,12 +124,16 @@ class FAISS:
 def main():
     # Define embedders to test
     embedders = [
-        ("Instructor", InstructorEmbedder())
+        ("Instructor", InstructorEmbedder()),
+        ("MiniLM", MiniLMEmbedder()),
+        ("MPNet", MPNetEmbedder())
     ]
     
     # Define configurations to test
     configs = [
-        {"chunk_size": 500, "overlap": 100}
+        {"chunk_size": 200, "overlap": 50},
+        {"chunk_size": 500, "overlap": 100},
+        {"chunk_size": 1000, "overlap": 200},
     ]
     
     # List to store results
@@ -176,7 +180,7 @@ def main():
     
     # Create DataFrame and save to CSV
     df = pd.DataFrame(results)
-    csv_filename = f'faiss_performance.csv'
+    csv_filename = f'faiss_performance2.csv'
     df.to_csv(csv_filename, index=False)
     print(f"\nPerformance metrics saved to: {csv_filename}")
     
