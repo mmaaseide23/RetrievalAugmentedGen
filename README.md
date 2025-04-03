@@ -6,10 +6,12 @@ method we have decided upon. Before using this repo, you will need to make sure 
 have our notes uploaded as the data to be used for our system, if you are using this for a different purpose you will have to remove our data and upload the data you would like to be
 used for the RAG system.
 
-Ingestion: We have determined __ and __ are optimal technologies to use for ingestion. To use this, navigate to __Ingest.py to start. From there all you will need to do is run the file and
-make sure that...
 
-LLM execution: As we are using __ for our ingestion, for the execution you will start by navigating to the __Execute.py file. From there you will need to run the file and navigate to the
-terminal that opens when you do so. From there you should have a query line that shows up where you can query the RAG system and it will output its repsonse to your query.
+
+Ingestion: To ingest the data, you need to start by choosing which database you want to use. Once you decide which one you would like to use, move the data folder and measure.py into that folder. 
+After that, navigate to the file with ingestion in the name and run it. You have the ability to alter the embedder, chunk size, and overlap towards the top of each file. Otherwise once you run it your data
+will be ingested.
+
+LLM execution: Once you have your data ingested, within the database folder you have been working in, you just need to navigate to the file that has the word execute in it. From there, in the function querying the model, you are able to change the model to any model in Ollama that you have installed. Once you make your choice (or use the default) just run the file and in your terminal there will be a space for you to query the system. 
 
 Team: Sam Baldwin, Michael Maaseide, Jeff Krapf, Alex Tu
