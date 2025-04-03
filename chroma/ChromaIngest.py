@@ -2,11 +2,11 @@ import pandas as pd
 import numpy as np
 import fitz
 import os
-import redis
 import chromadb
 from chromadb.utils import embedding_functions
 from pathlib import Path
 from measure import timer, memory
+
 
 class Chroma:
     def __init__(self, collection_name="awesome_collection", embedding_function=None):
