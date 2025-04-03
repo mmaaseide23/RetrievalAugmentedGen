@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from chroma.ChromaIngest import Chroma  # Assumes your Chroma class is in Chroma.py
 import ollama
-from measure import timer, memory  # Decorators to measure execution time and memory usage
+from FAISS.measure import timer, memory  # Decorators to measure execution time and memory usage
 
 prompts = [
     "Write a Mongo query based on the movies data set that returns the titles of all movies released between 2010 and 2015 from the suspense genre.",

@@ -1,8 +1,8 @@
 import json
 import numpy as np
-from Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
+from FAISS.Embedding import MiniLMEmbedder, MPNetEmbedder, InstructorEmbedder
 import ollama
-from FAISSIngest import FAISS
+from FAISS.FAISSIngest import FAISS
 
 # Initialize MiniLM Embedder
 embedder = MiniLMEmbedder()
